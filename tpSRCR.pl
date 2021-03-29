@@ -82,14 +82,14 @@ comprimento([_|T],S) :-
 	comprimento(T,G),
 	S is G+1.
 
-% Predicado que verifica que nõ há repetidos entre duas listas.
+% Predicado que cria uma nova lista sem os repetidos da lista original.
 % Extensão do predicado semRepetidos: Lista,Lista -> {V,F}.
 
 semRepetidos([],[]).
-semRepetidos([H|T], R) :-
+semRepetidos([H|T],R) :-
 	pertence(H,T),
 	semRepetidos(T,R).
-semRepetidos([H|T], [H|R]) :-
+semRepetidos([H|T],[H|R]) :-
 	nao(pertence(H,T)),
 	semRepetidos(T,R).
 
@@ -99,7 +99,9 @@ semRepetidos([H|T], [H|R]) :-
 procura(T,P,L) :- 
 	findall(T,P,L).
 
-
+% ----------------------------------------------------------------------------------------------
+% ---------------------------------------Funcionalidades----------------------------------------
+% ----------------------------------------------------------------------------------------------
 
 
 
