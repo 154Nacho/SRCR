@@ -60,30 +60,38 @@ vacinacao_Covid(2, 14, 2021-06-01, 'Pfizer', 2).
 % ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho-----------
 % ----------------------------------------------------------------------------------------------
 
+% ----------------------------------------------------------------------------------------------
 % Predicado que verifica se um elemento pertece a uma determinada lista.
 % Extensão do predicado pertence: X,Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
 
 pertence(X,[H|T]) :-
 	X \= H,
 	pertence(X,T).
 
+% ----------------------------------------------------------------------------------------------
 % Predicado que verifica o contrário de outro predicado.
 % Extensão do predicado não: Q -> {V,F}.
+% ----------------------------------------------------------------------------------------------
 
 nao(Q) :-
     Q, !, fail.
 nao(Q).
 
+% ----------------------------------------------------------------------------------------------
 % Predicado que verifica qual o comprimento de uma lista.
 % Extensão do predicado comprimento: Lista,Tamanho -> {V,F}.
+% ----------------------------------------------------------------------------------------------
 
 comprimento([],0).
 comprimento([_|T],S) :-
 	comprimento(T,G),
 	S is G+1.
 
+% ----------------------------------------------------------------------------------------------
 % Predicado que cria uma nova lista sem os repetidos da lista original.
 % Extensão do predicado semRepetidos: Lista,Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
 
 semRepetidos([],[]).
 semRepetidos([H|T],R) :-
@@ -93,23 +101,36 @@ semRepetidos([H|T],[H|R]) :-
 	nao(pertence(H,T)),
 	semRepetidos(T,R).
 
+% ----------------------------------------------------------------------------------------------
 % Predicado que permite a procura de Conhecimento.
 % Extensão do predicado procura: Termo,Predicado,Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
 
 procura(T,P,L) :- 
 	findall(T,P,L).
 
 % ----------------------------------------------------------------------------------------------
+% Predicado que permite a procura de Conhecimento sem repetidos.
+% Extensão do predicado solucoesSRep: Termo, Questão, Resultado -> {V,F}
+% ----------------------------------------------------------------------------------------------
+
+procuraSemRep(X,Y,Z) :- 
+	setof(X,Y,Z). 
+
+% ----------------------------------------------------------------------------------------------
 % ---------------------------------------Funcionalidades----------------------------------------
 % ----------------------------------------------------------------------------------------------
 
+% ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas vacinadas.
+% ----------------------------------------------------------------------------------------------
 
 vacinados(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,_)),V1),
-	semRepetidos(V1,V).
+	procuraSemRep((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,_)),V).
 
+% ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas não vacinadas.
+% ----------------------------------------------------------------------------------------------
 
 naoVacinados(V) :-
 	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
