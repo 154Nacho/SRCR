@@ -70,9 +70,9 @@ pertence(X,[H|T]) :-
 % Predicado que verifica o contrário de outro predicado.
 % Extensão do predicado não: Q -> {V,F}.
 
-nao(Questao) :-
-    Questao, !, fail.
-nao(Questao).
+nao(Q) :-
+    Q, !, fail.
+nao(Q).
 
 % Predicado que verifica qual o comprimento de uma lista.
 % Extensão do predicado comprimento: Lista,Tamanho -> {V,F}.
@@ -103,6 +103,16 @@ procura(T,P,L) :-
 % ---------------------------------------Funcionalidades----------------------------------------
 % ----------------------------------------------------------------------------------------------
 
+% Predicado que identifica as pessoas vacinadas.
+
+vacinados(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,_)),V1),
+	semRepetidos(V1,V).
+
+% Predicado que identifica as pessoas não vacinadas.
+
+naoVacinados(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
 
 
 
