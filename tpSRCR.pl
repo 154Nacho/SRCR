@@ -56,6 +56,50 @@ vacinacao_Covid(6, 8, 2021-08-15, 'Astrazeneca', 1).
 vacinacao_Covid(1, 15, 2021-07-31, 'Astrazeneca', 1).
 vacinacao_Covid(2, 14, 2021-06-01, 'Pfizer', 2).
 
+% ----------------------------------------------------------------------------------------------
+% ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho-----------
+% ----------------------------------------------------------------------------------------------
+
+% Predicado que verifica se um elemento pertece a uma determinada lista.
+% Extensão do predicado pertence: X,Lista -> {V,F}.
+
+pertence(X,[H|T]) :-
+	X \= H,
+	pertence(X,T).
+
+% Predicado que verifica o contrário de outro predicado.
+% Extensão do predicado não: Q -> {V,F}.
+
+nao(Questao) :-
+    Questao, !, fail.
+nao(Questao).
+
+% Predicado que verifica qual o comprimento de uma lista.
+% Extensão do predicado comprimento: Lista,Tamanho -> {V,F}.
+
+comprimento([],0).
+comprimento([_|T],S) :-
+	comprimento(T,G),
+	S is G+1.
+
+% Predicado que verifica que nõ há repetidos entre duas listas.
+% Extensão do predicado semRepetidos: Lista,Lista -> {V,F}.
+
+semRepetidos([],[]).
+semRepetidos([H|T], R) :-
+	pertence(H,T),
+	semRepetidos(T,R).
+semRepetidos([H|T], [H|R]) :-
+	nao(pertence(H,T)),
+	semRepetidos(T,R).
+
+% Predicado que permite a procura de Conhecimento.
+% Extensão do predicado procura: Termo,Predicado,Lista -> {V,F}.
+
+procura(T,P,L) :- 
+	findall(T,P,L).
+
+
 
 
 
