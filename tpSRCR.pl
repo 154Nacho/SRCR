@@ -51,10 +51,15 @@ staff(6, 5, 'Sérgio Batedor Oliveira', 'sbo@srcr.pt').
 vacinacao_Covid(1, 1, 2021-05-5, 'Pfizer', 1).
 vacinacao_Covid(6, 1, 2021-05-19, 'Pfizer', 2).
 vacinacao_Covid(2, 2, 2021-04-20, 'Pfizer', 2).
-vacinacao_Covid(3, 7, 2021-05-24, 'Astrazeneca', 1). 
+vacinacao_Covid(3, 7, 2021-05-24, 'Astrazeneca', 1).
+vacinacao_Covid(3, 7, 2021-06-15, 'Astrazeneca', 2).  
 vacinacao_Covid(6, 8, 2021-08-15, 'Astrazeneca', 1).
 vacinacao_Covid(1, 15, 2021-07-31, 'Astrazeneca', 1).
 vacinacao_Covid(2, 14, 2021-06-01, 'Pfizer', 2).
+
+primeira_fase_Vacinacao().
+segunda_fase_Vacinacao().
+terceira_fase_Vacinacao().
 
 % ----------------------------------------------------------------------------------------------
 % ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho-----------
@@ -126,7 +131,8 @@ procuraSemRep(X,Y,Z) :-
 % ----------------------------------------------------------------------------------------------
 
 vacinados(V) :-
-	procuraSemRep((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,_)),V).
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,2)),V1),
+	semRepetidos(V1,V).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas não vacinadas.
