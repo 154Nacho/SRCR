@@ -1,18 +1,31 @@
 % Trabalho Prático SRCR 20/21
 
-:- dynamic utente/10.
-:- dynamic centro_saude/5.
-:- dynamic staff/4.
-:- dynamic vacinacao_Covid/5.
+:- dynamic (utente/10).
+:- dynamic (centro_saude/5).
+:- dynamic (staff/4).
+:- dynamic (vacinacao_Covid/5).
 
-% -------------------------------------------------------
+% ----------------------------------------------------------------------------------------------
 % O Conhecimento pode ser aumentado mas nunca diminuído.
 % utente: #Idutente, Nº Segurança_Social, Nome, Data_Nasc, Email, Telefone, Morada, Profissão, [Doenças_Crónicas], #CentroSaúde.
 % centro_saude: #Idcentro, Nome, Morada, Telefone, Email.
 % staff: #Idstaff, #Idcentro, Nome, email.
 % vacinacao_Covid: #Staf, #utente, Data, Vacina, Toma.
-% -------------------------------------------------------
+% ----------------------------------------------------------------------------------------------
 
+% ----------------------------------------------------------------------------------------------
+% flags iniciais
+% ----------------------------------------------------------------------------------------------
+
+:- set_prolog_flag( discontiguous_warnings,off ).
+:- set_prolog_flag( single_var_warnings,off ).
+:- set_prolog_flag( unknown, fail ).
+
+% ----------------------------------------------------------------------------------------------
+% Definição de Invariantes
+% ----------------------------------------------------------------------------------------------
+
+:- op(900,xfy,'::').
 
 % -------------------------------------------------------
 % --------------- Base de Conhecimento ------------------
@@ -61,9 +74,9 @@ primeira_fase_Vacinacao().
 segunda_fase_Vacinacao().
 terceira_fase_Vacinacao().
 
-% ----------------------------------------------------------------------------------------------
-% ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho-----------
-% ----------------------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------------------------------------------------------------------
+% ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho que foram retirados de fichas das aulas --------------
+% ------------------------------------------------------------------------------------------------------------------------------------------
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que verifica se um elemento pertece a uma determinada lista.
@@ -120,7 +133,32 @@ procura(T,P,L) :-
 % ----------------------------------------------------------------------------------------------
 
 procuraSemRep(X,Y,Z) :- 
-	setof(X,Y,Z). 
+	setof(X,Y,Z).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que permite a evolução do Conhecimento.
+% Extensão do predicado evolução: Termo -> {V,F}
+% ----------------------------------------------------------------------------------------------
+
+evolucao( Termo ) :- solucoes(Invariante, +Termo::Invariante, Lista),
+                     insercao( Termo ),
+                     teste( Lista ).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que permite a inserção de um termo.
+% Extensão do predicado insercao: Termo -> {V,F}
+% ----------------------------------------------------------------------------------------------
+
+insercao( Termo ) :- assert( Termo ).
+insercao( Termo ) :- retract( Termo ), !, fail.
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que permite a remoção de um termo.
+% Extensão do predicado remocao: Termo -> {V,F}
+% ----------------------------------------------------------------------------------------------
+
+remocao(T) :- retract(T).
+remocao(T) :- assert(T),!,fail.
 
 % ----------------------------------------------------------------------------------------------
 % ---------------------------------------Funcionalidades----------------------------------------
