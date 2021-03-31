@@ -145,12 +145,20 @@ evolucao( Termo ) :- solucoes(Invariante, +Termo::Invariante, Lista),
                      teste( Lista ).
 
 % ----------------------------------------------------------------------------------------------
+% Predicado que permite o teste de invariante de uma lista.
+% Extensão do predicado teste: Lista -> {V,F}
+% ----------------------------------------------------------------------------------------------
+
+teste( [] ).
+teste( [R|LR] ) :- R, teste( LR ).
+
+% ----------------------------------------------------------------------------------------------
 % Predicado que permite a inserção de um termo.
 % Extensão do predicado insercao: Termo -> {V,F}
 % ----------------------------------------------------------------------------------------------
 
-insercao( Termo ) :- assert( Termo ).
-insercao( Termo ) :- retract( Termo ), !, fail.
+insercao(T) :- assert(T).
+insercao(T) :- retract(T), !, fail.
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que permite a remoção de um termo.
@@ -178,6 +186,13 @@ vacinados(V) :-
 
 naoVacinados(V) :-
 	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas às quais falta a segunda toma da vacina.
+% ----------------------------------------------------------------------------------------------
+
+%faltaSegundaToma(V) :-
+%	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,2))),V).
 
 
 
