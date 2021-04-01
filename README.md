@@ -1,2 +1,2 @@
 # SRCR
-Artificial Intelligence
+Sistemas de Representação de Conhecimento e Raciocínio 
