@@ -1,4 +1,4 @@
-% Trabalho Prático SRCR 20/21
+% Trabalho Prático SRCR 20/21.
 
 :- dynamic (utente/10).
 :- dynamic (centro_saude/5).
@@ -14,7 +14,7 @@
 % ----------------------------------------------------------------------------------------------
 
 % ----------------------------------------------------------------------------------------------
-% flags iniciais
+% Flags iniciais.
 % ----------------------------------------------------------------------------------------------
 
 :- set_prolog_flag( discontiguous_warnings,off ).
@@ -22,7 +22,7 @@
 :- set_prolog_flag( unknown, fail ).
 
 % ----------------------------------------------------------------------------------------------
-% Definição de Invariantes
+% Definição de Invariantes.
 % ----------------------------------------------------------------------------------------------
 
 :- op(900,xfy,'::').
@@ -129,7 +129,7 @@ procura(T,P,L) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que permite a procura de Conhecimento sem repetidos.
-% Extensão do predicado solucoesSRep: Termo, Questão, Resultado -> {V,F}
+% Extensão do predicado solucoesSRep: Termo, Questão, Resultado -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 procuraSemRep(X,Y,Z) :- 
@@ -137,7 +137,7 @@ procuraSemRep(X,Y,Z) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que permite a evolução do Conhecimento.
-% Extensão do predicado evolução: Termo -> {V,F}
+% Extensão do predicado evolução: Termo -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 evolucao( Termo ) :- procura(Invariante, +Termo::Invariante, Lista),
@@ -146,7 +146,7 @@ evolucao( Termo ) :- procura(Invariante, +Termo::Invariante, Lista),
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que permite o retrocesso do Conhecimento.
-% Extensão do predicado retrocesso: Termo -> {V,F}
+% Extensão do predicado retrocesso: Termo -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 retrocesso( Termo ) :- procura(Invariante, -Termo::Invariante, Lista),
@@ -155,7 +155,7 @@ retrocesso( Termo ) :- procura(Invariante, -Termo::Invariante, Lista),
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que permite o teste de invariante de uma lista.
-% Extensão do predicado teste: Lista -> {V,F}
+% Extensão do predicado teste: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 teste( [] ).
@@ -163,7 +163,7 @@ teste( [R|LR] ) :- R, teste( LR ).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que permite a inserção de um termo.
-% Extensão do predicado insercao: Termo -> {V,F}
+% Extensão do predicado insercao: Termo -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 insercao(T) :- assert(T).
@@ -171,11 +171,51 @@ insercao(T) :- retract(T), !, fail.
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que permite a remoção de um termo.
-% Extensão do predicado remocao: Termo -> {V,F}
+% Extensão do predicado remocao: Termo -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 remocao(T) :- retract(T).
 remocao(T) :- assert(T),!,fail.
+
+% ----------------------------------------------------------------------------------------------
+% -----------------------------------Invariantes para a remoção---------------------------------
+% ----------------------------------------------------------------------------------------------
+
+-utente(Id,Nss,N,D,E,T,M,P,DC,CS):: (procura(Id,utente(Id,Nss,N,D,E,T,M,P,DC,CS),L),
+									comprimento(L,R),
+									R == 1).
+
+-centro_saude(Id,N,M,T,E):: (procura(Id,centro_saude(Id,N,M,T,E),L),
+							comprimento(L,R),
+							R == 1). 
+
+-staff(Id,Idcs,N,E):: (procura(Id,staff(Id,Idcs,N,E),L),
+							comprimento(L,R),
+							R == 1).
+
+-vacinacao_Covid(Ids,Idu,D,V,T):: (procura(Idu,vacinacao_Covid(Ids,Idu,D,V,T),L),
+									comprimento(L,R),
+									R == 1).
+
+% ----------------------------------------------------------------------------------------------
+% ----------------------------------Invariantes para a inserção---------------------------------
+% ----------------------------------------------------------------------------------------------
+
++utente(Id,_,_,_,_,_,_,_,_,_):: (procura(Id,utente(Id,_,_,_,_,_,_,_,_,_),L),
+									comprimento(L,R),
+									R == 1).
+
++centro_saude(Id,_,_,_,_):: (procura(Id,centro_saude(Id,_,_,_,_),L),
+							comprimento(L,R),
+							R == 1). 
+
++staff(Id,_,_,_):: (procura(Id,staff(Id,_,_,_),L),
+							comprimento(L,R),
+							R == 1).
+
++vacinacao_Covid(_,Idu,_,_,_):: (procura(Idu,vacinacao_Covid(_,Idu,_,_,_),L),
+									comprimento(L,R),
+									R == 1).
 
 % ----------------------------------------------------------------------------------------------
 % ---------------------------------------Funcionalidades----------------------------------------
@@ -197,56 +237,32 @@ naoVacinados(V) :-
 	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
 
 % ----------------------------------------------------------------------------------------------
-% Predicado que identifica as pessoas às quais falta a segunda toma da vacina.
+% Registar Utentes.
 % ----------------------------------------------------------------------------------------------
 
-%faltaSegundaToma(V) :-
-%	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,2))),V).
+registarUtente(Id,Nss,N,D,E,T,M,P,DC,CS) :-
+	evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
 
 % ----------------------------------------------------------------------------------------------
-% -----------------------------------Invariantes para a remoção---------------------------------
+% Registar Centros de Saúde.
 % ----------------------------------------------------------------------------------------------
 
--utente(Id,Nss,N,D,E,T,M,P,DC,CS):: (procura(Id,utente(Id,Nss,N,D,E,T,M,P,DC,CS),L),
-									comprimento(L,R),
-									R == 1).
-
--centro_saude(Id,N,M,T,E):: (procura(Id,centro_saude(Id,N,M,T,E),L),
-							comprimento(L,R),
-							R == 1). 
-
--staff(Id,Idcs,N,E):: (procura(Id,staff(Id,Idcs,N,E),L),
-							comprimento(L,R),
-							R == 1).
-
--vacinacao_Covid(Ids,Idu,D,V,T):: (procura(D,vacinacao_Covid(Ids,Idu,D,V,T),L),
-									comprimento(L,R),
-									R == 1).
+registarCentro(Id,N,M,T,E) :-
+	evolucao(centro_saude(Id,N,M,T,E)).
 
 % ----------------------------------------------------------------------------------------------
-% ----------------------------------Invariantes para a inserção---------------------------------
+% Registar Staffs.
 % ----------------------------------------------------------------------------------------------
 
-+utente(Id,_,_,_,_,_,_,_,_,_):: (procura(Id,utente(Id,_,_,_,_,_,_,_,_,_),L),
-									comprimento(L,R),
-									R == 1).
+registarStaff(Id,Idcs,N,E) :-
+	evolucao(staff(Id,Idcs,N,E)).
 
-+centro_saude(Id,_,_,_,_):: (procura(Id,centro_saude(Id,_,_,_,_),L),
-							comprimento(L,R),
-							R == 1). 
+% ----------------------------------------------------------------------------------------------
+% Registar Vacinações de Covid.
+% ----------------------------------------------------------------------------------------------
 
-+staff(Id,_,_,_):: (procura(Id,staff(Id,_,_,_),L),
-							comprimento(L,R),
-							R == 1).
-
-+vacinacao_Covid(Ids,_,_,_,_):: (procura(D,vacinacao_Covid(Ids,_,_,_,_),L),
-									comprimento(L,R),
-									R == 1).
-
-
-
-
-
+registarVacinacao(Ids,Idu,D,V,T) :-
+	evolucao(vacinacao_Covid(Ids,Idu,D,V,T)).
 
 
 
