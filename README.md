@@ -1,2 +1,2 @@
 # SRCR
-Artificial Intelligence
+Prolog 
