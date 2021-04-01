@@ -140,9 +140,18 @@ procuraSemRep(X,Y,Z) :-
 % Extensão do predicado evolução: Termo -> {V,F}
 % ----------------------------------------------------------------------------------------------
 
-evolucao( Termo ) :- solucoes(Invariante, +Termo::Invariante, Lista),
+evolucao( Termo ) :- procura(Invariante, +Termo::Invariante, Lista),
                      insercao( Termo ),
                      teste( Lista ).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que permite o retrocesso do Conhecimento.
+% Extensão do predicado retrocesso: Termo -> {V,F}
+% ----------------------------------------------------------------------------------------------
+
+retrocesso( Termo ) :- procura(Invariante, -Termo::Invariante, Lista),
+					   testar( Lista ),
+					   remocao( Termo ).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que permite o teste de invariante de uma lista.
@@ -193,6 +202,70 @@ naoVacinados(V) :-
 
 %faltaSegundaToma(V) :-
 %	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,2))),V).
+
+% ----------------------------------------------------------------------------------------------
+% -----------------------------------Invariantes para a remoção---------------------------------
+% ----------------------------------------------------------------------------------------------
+
+-utente(Id,Nss,N,D,E,T,M,P,DC,CS):: (procura(Id,utente(Id,Nss,N,D,E,T,M,P,DC,CS),L),
+									comprimento(L,R),
+									R == 1).
+
+-centro_saude(Id,N,M,T,E):: (procura(Id,centro_saude(Id,N,M,T,E),L),
+							comprimento(L,R),
+							R == 1). 
+
+-staff(Id,Idcs,N,E):: (procura(Id,staff(Id,Idcs,N,E),L),
+							comprimento(L,R),
+							R == 1).
+
+-vacinacao_Covid(Ids,Idu,D,V,T):: (procura(D,vacinacao_Covid(Ids,Idu,D,V,T),L),
+									comprimento(L,R),
+									R == 1).
+
+% ----------------------------------------------------------------------------------------------
+% ----------------------------------Invariantes para a inserção---------------------------------
+% ----------------------------------------------------------------------------------------------
+
++utente(Id,_,_,_,_,_,_,_,_,_):: (procura(Id,utente(Id,_,_,_,_,_,_,_,_,_),L),
+									comprimento(L,R),
+									R == 1).
+
++centro_saude(Id,_,_,_,_):: (procura(Id,centro_saude(Id,_,_,_,_),L),
+							comprimento(L,R),
+							R == 1). 
+
++staff(Id,_,_,_):: (procura(Id,staff(Id,_,_,_),L),
+							comprimento(L,R),
+							R == 1).
+
++vacinacao_Covid(Ids,_,_,_,_):: (procura(D,vacinacao_Covid(Ids,_,_,_,_),L),
+									comprimento(L,R),
+									R == 1).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
