@@ -63,12 +63,13 @@ staff(6, 5, 'Sérgio Batedor Oliveira', 'sbo@srcr.pt').
 
 vacinacao_Covid(1, 1, 2021-05-5, 'Pfizer', 1).
 vacinacao_Covid(6, 1, 2021-05-19, 'Pfizer', 2).
-vacinacao_Covid(2, 2, 2021-04-20, 'Pfizer', 2).
+vacinacao_Covid(2, 2, 2021-04-20, 'Pfizer', 1).
 vacinacao_Covid(3, 7, 2021-05-24, 'Astrazeneca', 1).
 vacinacao_Covid(3, 7, 2021-06-15, 'Astrazeneca', 2).  
 vacinacao_Covid(6, 8, 2021-08-15, 'Astrazeneca', 1).
 vacinacao_Covid(1, 15, 2021-07-31, 'Astrazeneca', 1).
-vacinacao_Covid(2, 14, 2021-06-01, 'Pfizer', 2).
+vacinacao_Covid(2, 14, 2021-06-01, 'Pfizer', 1).
+vacinacao_Covid(2,14, 2021-06-16, 'Pfizer', 2).
 
 primeira_fase_Vacinacao().
 segunda_fase_Vacinacao().
@@ -111,13 +112,13 @@ comprimento([_|T],S) :-
 % Extensão do predicado semRepetidos: Lista,Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
-semRepetidos([],[]).
-semRepetidos([H|T],R) :-
+removeRepetidos([],[]).
+removeRepetidos([H|T],R) :-
 	pertence(H,T),
-	semRepetidos(T,R).
-semRepetidos([H|T],[H|R]) :-
+	removeRepetidos(T,R).
+removeRepetidos([H|T],[H|R]) :-
 	nao(pertence(H,T)),
-	semRepetidos(T,R).
+	removeRepetidos(T,R).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que permite a procura de Conhecimento.
@@ -217,24 +218,13 @@ remocao(T) :- assert(T),!,fail.
 									comprimento(L,R),
 									R == 1).
 
+% Ids do utente e do staff têm de existir para inserir uma vacinação.
++vacinacao_Covid(Ids,Idu,D,V,T):: (utente(Id,Nss,N,D,E,T,M,P,DC,CS),
+									staff(Id,Idcs,N,E)).
+
 % ----------------------------------------------------------------------------------------------
 % ---------------------------------------Funcionalidades----------------------------------------
 % ----------------------------------------------------------------------------------------------
-
-% ----------------------------------------------------------------------------------------------
-% Predicado que identifica as pessoas vacinadas.
-% ----------------------------------------------------------------------------------------------
-
-vacinados(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,2)),V1),
-	semRepetidos(V1,V).
-
-% ----------------------------------------------------------------------------------------------
-% Predicado que identifica as pessoas não vacinadas.
-% ----------------------------------------------------------------------------------------------
-
-naoVacinados(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
 
 % ----------------------------------------------------------------------------------------------
 % Registar Utentes.
@@ -299,6 +289,46 @@ removerStaff(Id) :-
 
 removerVacinacao(Ids,Idu,D) :-
 	retrocesso(vacinacao_Covid(Ids,Idu,D,V,T)).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas vacinadas.
+% ----------------------------------------------------------------------------------------------
+
+vacinados(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,2)),V1),
+	removeRepetidos(V1,V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas não vacinadas.
+% ----------------------------------------------------------------------------------------------
+
+naoVacinados(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
 
 
 
