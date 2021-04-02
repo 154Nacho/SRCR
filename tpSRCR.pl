@@ -213,7 +213,7 @@ remocao(T) :- assert(T),!,fail.
 							comprimento(L,R),
 							R == 1).
 
-+vacinacao_Covid(_,Idu,_,_,_):: (procura(Idu,vacinacao_Covid(_,Idu,_,_,_),L),
++vacinacao_Covid(Ids,Idu,D,_,_):: (procura((Ids,Idu,D),vacinacao_Covid(Ids,Idu,D,_,_),L),
 									comprimento(L,R),
 									R == 1).
 
@@ -238,6 +238,7 @@ naoVacinados(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Registar Utentes.
+% Extensão do predicado registarUtente: Id_Utente, Número de Segurança_Social, Nome, Data Nascimento, Email, Telefone, Morada, Profissão, [Doenças_Crónicas], CentroSaúde -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 registarUtente(Id,Nss,N,D,E,T,M,P,DC,CS) :-
@@ -245,6 +246,7 @@ registarUtente(Id,Nss,N,D,E,T,M,P,DC,CS) :-
 
 % ----------------------------------------------------------------------------------------------
 % Registar Centros de Saúde.
+% Extensão do predicado registarCentro: Id_Centro, Nome, Morada, Telefone, Email -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 registarCentro(Id,N,M,T,E) :-
@@ -252,6 +254,7 @@ registarCentro(Id,N,M,T,E) :-
 
 % ----------------------------------------------------------------------------------------------
 % Registar Staffs.
+% Extensão do predicado registarStaff: Id_Staff, Id_Centro, Nome, Email -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 registarStaff(Id,Idcs,N,E) :-
@@ -259,16 +262,43 @@ registarStaff(Id,Idcs,N,E) :-
 
 % ----------------------------------------------------------------------------------------------
 % Registar Vacinações de Covid.
+% Extensão do predicado registarVacinacao: Id_Staff, Id_Utente, Data, Vacina, Toma -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 registarVacinacao(Ids,Idu,D,V,T) :-
 	evolucao(vacinacao_Covid(Ids,Idu,D,V,T)).
 
+% ----------------------------------------------------------------------------------------------
+% Remover Utentes.
+% Extensão do predicado removerUtente: Id_Utente, Número de Segurança_Social, Nome, Data Nascimento, Email, Telefone, Morada, Profissão, [Doenças_Crónicas], CentroSaúde -> {V,F}.
+% ----------------------------------------------------------------------------------------------
 
+removerUtentes(Id) :-
+	retrocesso(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
 
+% ----------------------------------------------------------------------------------------------
+% Remover Centros de Saúde.
+% Extensão do predicado removerCentro: Id_Centro, Nome, Morada, Telefone, Email -> {V,F}.
+% ----------------------------------------------------------------------------------------------
 
+removerCentros(Id) :-
+	retrocesso(centro_saude(Id,N,M,T,E)).
 
+% ----------------------------------------------------------------------------------------------
+% Remover Staff.
+% Extensão do predicado removerStaff: Id_Staff, Id_Centro, Nome, Email -> {V,F}.
+% ----------------------------------------------------------------------------------------------
 
+removerStaff(Id) :-
+	retrocesso(staff(Id,Idcs,N,E)).
+
+% ----------------------------------------------------------------------------------------------
+% Remover Vacinações de Covid.
+% Extensão do predicado removerVacinacao: Id_Staff, Id_Utente, Data, Vacina, Toma -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+removerVacinacao(Ids,Idu,D) :-
+	retrocesso(vacinacao_Covid(Ids,Idu,D,V,T)).
 
 
 
