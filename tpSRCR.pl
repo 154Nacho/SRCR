@@ -210,6 +210,15 @@ remocao(T) :- assert(T),!,fail.
 									comprimento(L,R),
 									R == 1).
 
+% Não permitir a remoção de utentes e de staff se existirem vacinações de covid a eles associadas.
+-utente(Id,Nss,N,D,E,T,M,P,DC,CS):: (procura(Id,vacinacao_Covid(Ids,Id,D,V,T),L),
+									comprimento(L,R),
+									R == 0).
+
+-staff(Id,Idcs,N,E):: (procura(Id,vacinacao_Covid(Id,Idu,D,V,T),L),
+									comprimento(L,R),
+									R == 0).
+
 % ----------------------------------------------------------------------------------------------
 % ----------------------------------Invariantes para a inserção---------------------------------
 % ----------------------------------------------------------------------------------------------
@@ -324,6 +333,17 @@ vacinadosPrimeiraToma(V) :-
 naoVacinados(V) :-
 	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
 
+
+
+
+
+
+
+
+
+
+idade1_fase_vacinacao(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,D,_,_,_,_,_,_),comparaDatas(1941-12-31,D,1941-12-31)),V).
 
 
 
