@@ -32,15 +32,15 @@
 % -------------------------------------------------------
 
 utente(1, 12345678901, 'João da Costa e Campos', 1935-05-03, 'jcc@srcr.pt', '911111111', 'Rua das Adegas Felizes, 12, 1ª Cave', 'Reformado', ['Doenças Reumáticas','Cancro'], 5).
-utente(2, 58203459103, 'Josefina Vivida da Paz', 1958-12-02, 'jvp@srcr.pt', 912222222, 'Av dos Castros Reais, 122, 3ºE', 'Professora', ['Asma', 'Diabetes'], 4).
+utente(2, 58203459103, 'Josefina Vivida da Paz', 1958-12-02, 'jvp@srcr.pt', 912222222, 'Av dos Castros Reais, 122, 3ºE', 'Professor', ['Asma', 'Diabetes'], 4).
 utente(3, 98437219304, 'Ana Santa do Carmo', 1997-08-21, 'asc@srcr.pt', 913333333, 'Travessa do Jacob, 21', 'Estudante', [], 3).
-utente(4, 23345886912, 'Jesualdo Peza-Mor', 1963-11-14, 'jpm@srcr.pt', 914444444, 'Estrada do Sossego, Km10', 'Bombeiro', ['Doenças Reumáticas', 'Colesterol'], 2).
-utente(5, 67483900221, 'Maria da Trindade Pascoal', 1985-05-05, 'mtp@srcr.pt', 915555555, 'Rua das Adegas da Rua, 15, 10 Esq/T', 'Historiadora', ['Visão'], 1).
+utente(4, 23345886912, 'Jesualdo Peza-Mor', 1963-11-14, 'jpm@srcr.pt', 914444444, 'Estrada do Sossego, Km10', 'Enfermeiro', ['Doenças Reumáticas', 'Colesterol'], 2).
+utente(5, 67483900221, 'Maria da Trindade Pascoal', 1985-05-05, 'mtp@srcr.pt', 915555555, 'Rua das Adegas da Rua, 15, 10 Esq/T', 'Historiador', ['Visão'], 1).
 utente(6, 34554367887, 'Florindo Teixo Figueirinha', 1974-04-25, 'ftf@srcr.pt', 916666666, 'Autódromo das Vagas, Garagem 123', 'Lojista', ['Hipertensão'], 3).
 utente(7, 78990546351, 'Carminho Cunha Bastos', 1960-01-01, 'ccb@srcr.pr', 917777777, 'Rua do Mus-Vitalis, 56, R/C', 'Catequista', ['Parkinson', 'Osteoporose'], 2).
 utente(8, 55599911102, 'Francisco Correia Franco', 1999-04-03, 'fcf@srcr.pt', 918888888, 'Rua do Povo, 152', 'Estudante', [], 1).
-utente(9, 09876543212, 'Maria Quintas Barros', 1950-12-31, 'mqb@srcr.pt', 919999999, 'Rua do Fragão, 44', 'Pilota de Aviões', ['Diabetes', 'Hipertensão', 'Visão'], 5).
-utente(10, 58210227854, 'Maria Beatriz Araújo Lacerda', 1989-07-27, 'mbal@srcr.pt', 921111111, 'Rua do Galo Barcelonete, 136', 'Cabeleireira', ['Doença Pulmonar Obstrutiva'], 4).
+utente(9, 09876543212, 'Maria Quintas Barros', 1950-12-31, 'mqb@srcr.pt', 919999999, 'Rua do Fragão, 44', 'Piloto de Aviões', ['Diabetes', 'Hipertensão', 'Visão'], 5).
+utente(10, 58210227854, 'Maria Beatriz Araújo Lacerda', 1989-07-27, 'mbal@srcr.pt', 921111111, 'Rua do Galo Barcelonete, 136', 'Cabeleireiro', ['Doença Pulmonar Obstrutiva'], 4).
 utente(11, 01928374657, 'Ana Teresa Gião Gomes', 1947-02-12, 'atgg@srcr.pt', 922222222, 'Rua da Vuvuzela, 158', 'Youtuber', ['Alzheimer', 'Asma'], 5).
 utente(12, 34543678769, 'João Manuel Peixe dos Santos', 1978-06-18, 'jmps@srcr.pt', 923333333, 'Rua dos Peixotos, 61, 4ªD', 'Contabilista', ['Doenças Reumáticas', 'Cancro'], 3).
 utente(13, 21114599083, 'Paulo Nobre Sousa', 1994-10-10, 'pns@srcr.pt', 924444444, 'Rua dos Móveis Cerrados, 29', 'Engenheiro de Polímeros', [], 5).
@@ -84,9 +84,16 @@ terceira_fase_Vacinacao().
 % Extensão do predicado pertence: X,Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
-pertence(X,[H|T]) :-
+pertence(H,[H|_T]).
+pertence(X,[H|_T]) :-
 	X \= H,
-	pertence(X,T).
+pertence(X,_T).
+
+add(E,L,L) :- pertence(E,L).
+add(E, L, [E|L]).
+
+concat([], L, L).
+concat([H|T], L, R) :- add(H, N, R), concat(T, L, N).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que verifica o contrário de outro predicado.
@@ -343,7 +350,21 @@ naoVacinados(V) :-
 
 
 idade1_fase_vacinacao(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,D,_,_,_,_,_,_),comparaDatas(1941-12-31,D,1941-12-31)),V).
+	procura((Id,Nome),(utente(Id,_,Nome,D,_,_,_,_,_,_),comparaDatas(1942-01-01,D,1942-01-01)),V).
+
+profissao1_fase_vacinacao(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,P,_,_),(P == 'Médico';P == 'Enfermeiro';P == 'Professor')),V).
+
+doencas1_fase_vacinacao(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,L,_),(pertence('Cancro',L);pertence('Diabetes',L))),V).
+
+fase1_vacinacao(V) :-
+	idade1_fase_vacinacao(I),
+	profissao1_fase_vacinacao(P),
+	concat(I,P,L),
+	doencas1_fase_vacinacao(D),
+	concat(L,D,V1),
+	removeRepetidos(V1,V).
 
 
 
