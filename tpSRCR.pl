@@ -31,7 +31,7 @@
 % --------------- Base de Conhecimento ------------------
 % -------------------------------------------------------
 
-utente(1, 12345678901, 'João da Costa e Campos', 1935-05-03, 'jcc@srcr.pt', '911111111', 'Rua das Adegas Felizes, 12, 1ª Cave', 'Reformado', ['Doenças Cardiovasculares'], 5).
+utente(1, 12345678901, 'João da Costa e Campos', 1935-05-03, 'jcc@srcr.pt', '911111111', 'Rua das Adegas Felizes, 12, 1ª Cave', 'Reformado', ['Doenças Reumáticas','Cancro'], 5).
 utente(2, 58203459103, 'Josefina Vivida da Paz', 1958-12-02, 'jvp@srcr.pt', 912222222, 'Av dos Castros Reais, 122, 3ºE', 'Professora', ['Asma', 'Diabetes'], 4).
 utente(3, 98437219304, 'Ana Santa do Carmo', 1997-08-21, 'asc@srcr.pt', 913333333, 'Travessa do Jacob, 21', 'Estudante', [], 3).
 utente(4, 23345886912, 'Jesualdo Peza-Mor', 1963-11-14, 'jpm@srcr.pt', 914444444, 'Estrada do Sossego, Km10', 'Bombeiro', ['Doenças Reumáticas', 'Colesterol'], 2).
@@ -106,6 +106,18 @@ comprimento([],0).
 comprimento([_|T],S) :-
 	comprimento(T,G),
 	S is G+1.
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que verifica qual a maior data entre duas.
+% Extensão do predicado data_Maior: Lista,Tamanho -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+comparaDatas(Y1-M1-D1,Y2-M2-D2,Y1-M1-D1) :- Y2 < Y1;
+                                         (Y2 == Y1, M2 < M1);
+                                         (Y2 == Y1, M2 == M1, D2 < D1).
+comparaDatas(Y1-M1-D1,Y2-M2-D2,Y2-M2-D2) :- Y2 > Y1;
+                                         (Y2 == Y1, M2 > M1);
+                                         (Y2 == Y1, M2 == M1, D2 >= D1).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que cria uma nova lista sem os repetidos da lista original.
@@ -290,31 +302,6 @@ removerStaff(Id) :-
 removerVacinacao(Ids,Idu,D) :-
 	retrocesso(vacinacao_Covid(Ids,Idu,D,V,T)).
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas vacinadas.
 % ----------------------------------------------------------------------------------------------
@@ -322,6 +309,13 @@ removerVacinacao(Ids,Idu,D) :-
 vacinados(V) :-
 	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,2)),V1),
 	removeRepetidos(V1,V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas a quem falta a segunda toma da vacina.
+% ----------------------------------------------------------------------------------------------
+
+vacinadosPrimeiraToma(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,1),nao(vacinacao_Covid(_,Id,_,_,2))),V).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas não vacinadas.
