@@ -46,7 +46,7 @@ utente(12, 34543678769, 'João Manuel Peixe dos Santos', 1978-06-18, 'jmps@srcr.
 utente(13, 21114599083, 'Paulo Nobre Sousa', 1994-10-10, 'pns@srcr.pt', 924444444, 'Rua dos Móveis Cerrados, 29', 'Engenheiro de Polímeros', [], 5).
 utente(14, 88888855555, 'Luís Parente Pacheco Martins', 1964-08-04, 'lppm@srcr.pt', 925555555, 'Rua dos Cabeços Lamparinos, 80', 'Eletricista', ['Doenças Cardiovasculares'], 4).
 utente(15, 10000100201, 'Bruno Felipe Enes Diaz', 2000-11-21, 'bfed@srcr.pt', 926666666, 'Rua dos Amareiros Ferrenhos, 137', 'Médico', [], 1).
-utente(16, 93330201456, 'Pedro Miguel Ferreira Lemos', 1980-09-26, 'pmfl@srcr.pt', 927777777, 'Rua dos Maçaricos Portenhos, 154', 'Automobilista', ['Doenças Cardiovasculares', 'Visão', 'Hipertensão'], 4).
+utente(16, 93330201456, 'Pedro Miguel Ferreira Lemos', 1980-09-26, 'pmfl@srcr.pt', 927777777, 'Rua dos Maçaricos Portenhos, 154', 'Militar', ['Doenças Cardiovasculares', 'Visão', 'Hipertensão'], 4).
 
 centro_saude(1, 'Centro de Saúde Mem Martins', 'Rua Pedro Bispo, 725', 951111111, 'csmm@srcr.pt').
 centro_saude(2, 'Centro de Saúde Chelas', 'Rua Samuel Mira, 666', 952222222, 'csc@srcr.pt').
@@ -70,10 +70,6 @@ vacinacao_Covid(6, 8, 2021-08-15, 'Astrazeneca', 1).
 vacinacao_Covid(1, 15, 2021-07-31, 'Astrazeneca', 1).
 vacinacao_Covid(2, 14, 2021-06-01, 'Pfizer', 1).
 vacinacao_Covid(2,14, 2021-06-16, 'Pfizer', 2).
-
-primeira_fase_Vacinacao().
-segunda_fase_Vacinacao().
-terceira_fase_Vacinacao().
 
 % ------------------------------------------------------------------------------------------------------------------------------------------
 % ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho que foram retirados de fichas das aulas --------------
@@ -340,23 +336,9 @@ vacinadosPrimeiraToma(V) :-
 naoVacinados(V) :-
 	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
 
-
-
-
-
-
-
-
-
-
-idade1_fase_vacinacao(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,D,_,_,_,_,_,_),comparaDatas(1942-01-01,D,1942-01-01)),V).
-
-profissao1_fase_vacinacao(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,P,_,_),(P == 'Médico';P == 'Enfermeiro';P == 'Professor')),V).
-
-doencas1_fase_vacinacao(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,L,_),(pertence('Cancro',L);pertence('Diabetes',L))),V).
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas elegíveis para vacinação na primeira fase.
+% ----------------------------------------------------------------------------------------------
 
 fase1_vacinacao(V) :-
 	idade1_fase_vacinacao(I),
@@ -365,6 +347,62 @@ fase1_vacinacao(V) :-
 	doencas1_fase_vacinacao(D),
 	concat(L,D,V1),
 	removeRepetidos(V1,V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas elegíveis para vacinação na primeira fase devido à sua idade.
+% ----------------------------------------------------------------------------------------------
+
+idade1_fase_vacinacao(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,D,_,_,_,_,_,_),comparaDatas(1942-01-01,D,1942-01-01)),V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas elegíveis para vacinação na primeira fase devido à sua profissão.
+% ----------------------------------------------------------------------------------------------
+
+profissao1_fase_vacinacao(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,P,_,_),(P == 'Médico';P == 'Enfermeiro';P == 'Militar')),V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas elegíveis para vacinação na primeira fase devido às suas doenças crónicas.
+% ----------------------------------------------------------------------------------------------
+
+doencas1_fase_vacinacao(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,L,_),(pertence('Doença Pulmonar Obstrutiva',L);pertence('Doenças Cardiovasculares',L);pertence('Hipertensão',L))),V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas elegíveis para vacinação na segunda fase.
+% ----------------------------------------------------------------------------------------------
+
+fase2_vacinacao(V) :-
+	idade2_fase_vacinacao(I),
+	profissao2_fase_vacinacao(P),
+	concat(I,P,L),
+	doencas2_fase_vacinacao(D),
+	concat(L,D,V1),
+	removeRepetidos(V1,V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas elegíveis para vacinação na segunda fase devido à sua idade.
+% ----------------------------------------------------------------------------------------------
+
+idade2_fase_vacinacao(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,D,_,_,_,_,_,_),comparaDatas(1972-01-01,D,1972-01-01),comparaDatas(1942-01-01,D,D)),V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas elegíveis para vacinação na segunda fase devido à sua profissão.
+% ----------------------------------------------------------------------------------------------
+
+profissao2_fase_vacinacao(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,P,_,_),(P == 'Professor';P == 'Estudante')),V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas elegíveis para vacinação na segunda fase devido às suas doenças crónicas.
+% ----------------------------------------------------------------------------------------------
+
+doencas2_fase_vacinacao(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,L,_),(pertence('Diabetes',L);pertence('Obesidade',L);pertence('Asma',L);pertence('Cancro',L))),V).
+
+
 
 
 
