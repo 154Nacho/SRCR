@@ -31,22 +31,25 @@
 % --------------- Base de Conhecimento ------------------
 % -------------------------------------------------------
 
-utente(1, 12345678901, 'João da Costa e Campos', 1935-05-03, 'jcc@srcr.pt', '911111111', 'Rua das Adegas Felizes, 12, 1ª Cave', 'Reformado', ['Doenças Reumáticas','Cancro'], 5).
-utente(2, 58203459103, 'Josefina Vivida da Paz', 1958-12-02, 'jvp@srcr.pt', 912222222, 'Av dos Castros Reais, 122, 3ºE', 'Professor', ['Asma', 'Diabetes'], 4).
-utente(3, 98437219304, 'Ana Santa do Carmo', 1997-08-21, 'asc@srcr.pt', 913333333, 'Travessa do Jacob, 21', 'Estudante', [], 3).
-utente(4, 23345886912, 'Jesualdo Peza-Mor', 1963-11-14, 'jpm@srcr.pt', 914444444, 'Estrada do Sossego, Km10', 'Enfermeiro', ['Doenças Reumáticas', 'Colesterol'], 2).
+utente(1, 12345678901, 'João da Costa e Campos', 1935-05-03, 'jcc@srcr.pt', '911111111', 'Rua das Adegas Felizes, 12, 1ª Cave', 'Reformado', ['Doenças Reumáticas','Cancro'], 5). % Elegível para 1ª fase por idade.
+utente(17, 22990000000, 'Almira da Cruz Santos', 1910-05-01, 'adcs@srcr.pt', '928888888', 'Rua da Alegria, 1', 'Reformada', [], 1). % Elegível para 1ª fase por idade.
+utente(10, 58210227854, 'Maria Beatriz Araújo Lacerda', 1989-07-27, 'mbal@srcr.pt', 921111111, 'Rua do Galo Barcelonete, 136', 'Cabeleireiro', ['Doença Pulmonar Obstrutiva'], 4). % Elegível para 1ª fase por doença.
+utente(14, 88888855555, 'Luís Parente Pacheco Martins', 1964-08-04, 'lppm@srcr.pt', 925555555, 'Rua dos Cabeços Lamparinos, 80', 'Eletricista', ['Doenças Cardiovasculares'], 4). % Elegível para 1ª fase por doença.
+utente(4, 23345886912, 'Jesualdo Peza-Mor', 1963-11-14, 'jpm@srcr.pt', 914444444, 'Estrada do Sossego, Km10', 'Enfermeiro', ['Doenças Reumáticas', 'Colesterol'], 2). % Elegível para 1ª fase por profissão.
+utente(15, 10000100201, 'Bruno Felipe Enes Diaz', 2000-11-21, 'bfed@srcr.pt', 926666666, 'Rua dos Amareiros Ferrenhos, 137', 'Médico', [], 1). % Elegível para 1ª fase por profissão.
+utente(16, 93330201456, 'Pedro Miguel Ferreira Lemos', 1980-09-26, 'pmfl@srcr.pt', 927777777, 'Rua dos Maçaricos Portenhos, 154', 'Militar', ['Doenças Cardiovasculares', 'Visão', 'Hipertensão'], 4). % Elegível para 1ª fase por profissão e doença.
+
+utente(2, 58203459103, 'Josefina Vivida da Paz', 1958-12-02, 'jvp@srcr.pt', 912222222, 'Av dos Castros Reais, 122, 3ºE', 'Professor', ['Asma', 'Diabetes'], 4). % Elegível para 2ª fase por idade,profissão e doença.
+utente(7, 78990546351, 'Carminho Cunha Bastos', 1960-01-01, 'ccb@srcr.pr', 917777777, 'Rua do Mus-Vitalis, 56, R/C', 'Catequista', ['Parkinson', 'Osteoporose'], 2). % Elegível para 2ª fase por idade.
+utente(9, 09876543212, 'Maria Quintas Barros', 1950-12-31, 'mqb@srcr.pt', 919999999, 'Rua do Fragão, 44', 'Piloto de Aviões', ['Diabetes', 'Hipertensão', 'Visão'], 5). % Elegível para 2ª fase por idade e doença.
+utente(11, 01928374657, 'Ana Teresa Gião Gomes', 1947-02-12, 'atgg@srcr.pt', 922222222, 'Rua da Vuvuzela, 158', 'Youtuber', ['Alzheimer', 'Asma'], 5). % Elegível para 2ª fase por idade e doença.
+utente(3, 98437219304, 'Ana Santa do Carmo', 1997-08-21, 'asc@srcr.pt', 913333333, 'Travessa do Jacob, 21', 'Estudante', [], 3). % Elegível para 2ª fase por profissão.
+utente(8, 55599911102, 'Francisco Correia Franco', 1999-04-03, 'fcf@srcr.pt', 918888888, 'Rua do Povo, 152', 'Estudante', [], 1).  % Elegível para 2ª fase por profissão.
+utente(12, 34543678769, 'João Manuel Peixe dos Santos', 1978-06-18, 'jmps@srcr.pt', 923333333, 'Rua dos Peixotos, 61, 4ªD', 'Contabilista', ['Obesidade'], 3). % Elegível para 2ª fase por doença.
+
 utente(5, 67483900221, 'Maria da Trindade Pascoal', 1985-05-05, 'mtp@srcr.pt', 915555555, 'Rua das Adegas da Rua, 15, 10 Esq/T', 'Historiador', ['Visão'], 1).
 utente(6, 34554367887, 'Florindo Teixo Figueirinha', 1974-04-25, 'ftf@srcr.pt', 916666666, 'Autódromo das Vagas, Garagem 123', 'Lojista', ['Hipertensão'], 3).
-utente(7, 78990546351, 'Carminho Cunha Bastos', 1960-01-01, 'ccb@srcr.pr', 917777777, 'Rua do Mus-Vitalis, 56, R/C', 'Catequista', ['Parkinson', 'Osteoporose'], 2).
-utente(8, 55599911102, 'Francisco Correia Franco', 1999-04-03, 'fcf@srcr.pt', 918888888, 'Rua do Povo, 152', 'Estudante', [], 1).
-utente(9, 09876543212, 'Maria Quintas Barros', 1950-12-31, 'mqb@srcr.pt', 919999999, 'Rua do Fragão, 44', 'Piloto de Aviões', ['Diabetes', 'Hipertensão', 'Visão'], 5).
-utente(10, 58210227854, 'Maria Beatriz Araújo Lacerda', 1989-07-27, 'mbal@srcr.pt', 921111111, 'Rua do Galo Barcelonete, 136', 'Cabeleireiro', ['Doença Pulmonar Obstrutiva'], 4).
-utente(11, 01928374657, 'Ana Teresa Gião Gomes', 1947-02-12, 'atgg@srcr.pt', 922222222, 'Rua da Vuvuzela, 158', 'Youtuber', ['Alzheimer', 'Asma'], 5).
-utente(12, 34543678769, 'João Manuel Peixe dos Santos', 1978-06-18, 'jmps@srcr.pt', 923333333, 'Rua dos Peixotos, 61, 4ªD', 'Contabilista', ['Doenças Reumáticas', 'Cancro'], 3).
 utente(13, 21114599083, 'Paulo Nobre Sousa', 1994-10-10, 'pns@srcr.pt', 924444444, 'Rua dos Móveis Cerrados, 29', 'Engenheiro de Polímeros', [], 5).
-utente(14, 88888855555, 'Luís Parente Pacheco Martins', 1964-08-04, 'lppm@srcr.pt', 925555555, 'Rua dos Cabeços Lamparinos, 80', 'Eletricista', ['Doenças Cardiovasculares'], 4).
-utente(15, 10000100201, 'Bruno Felipe Enes Diaz', 2000-11-21, 'bfed@srcr.pt', 926666666, 'Rua dos Amareiros Ferrenhos, 137', 'Médico', [], 1).
-utente(16, 93330201456, 'Pedro Miguel Ferreira Lemos', 1980-09-26, 'pmfl@srcr.pt', 927777777, 'Rua dos Maçaricos Portenhos, 154', 'Militar', ['Doenças Cardiovasculares', 'Visão', 'Hipertensão'], 4).
 
 centro_saude(1, 'Centro de Saúde Mem Martins', 'Rua Pedro Bispo, 725', 951111111, 'csmm@srcr.pt').
 centro_saude(2, 'Centro de Saúde Chelas', 'Rua Samuel Mira, 666', 952222222, 'csc@srcr.pt').
@@ -65,7 +68,7 @@ vacinacao_Covid(1, 1, 2021-05-5, 'Pfizer', 1).
 vacinacao_Covid(6, 1, 2021-05-19, 'Pfizer', 2).
 vacinacao_Covid(2, 2, 2021-04-20, 'Pfizer', 1).
 vacinacao_Covid(3, 7, 2021-05-24, 'Astrazeneca', 1).
-vacinacao_Covid(3, 7, 2021-06-15, 'Astrazeneca', 2).  
+vacinacao_Covid(3, 7, 2021-06-15, 'Astrazeneca', 2).
 vacinacao_Covid(6, 8, 2021-08-15, 'Astrazeneca', 1).
 vacinacao_Covid(1, 15, 2021-07-31, 'Astrazeneca', 1).
 vacinacao_Covid(2, 14, 2021-06-01, 'Pfizer', 1).
@@ -140,7 +143,7 @@ removeRepetidos([H|T],[H|R]) :-
 % Extensão do predicado procura: Termo,Predicado,Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
-procura(T,P,L) :- 
+procura(T,P,L) :-
 	findall(T,P,L).
 
 % ----------------------------------------------------------------------------------------------
@@ -148,7 +151,7 @@ procura(T,P,L) :-
 % Extensão do predicado solucoesSRep: Termo, Questão, Resultado -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
-procuraSemRep(X,Y,Z) :- 
+procuraSemRep(X,Y,Z) :-
 	setof(X,Y,Z).
 
 % ----------------------------------------------------------------------------------------------
@@ -194,6 +197,18 @@ remocao(T) :- retract(T).
 remocao(T) :- assert(T),!,fail.
 
 % ----------------------------------------------------------------------------------------------
+% Predicado que permite a remoção de um tuplo de uma lista de outra lista (Remove os tuplos da segunda lista da primeira lista).
+% Extensão do predicado remocao: Lista, Lista, Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+eliminaTuplos([], _, []) :- !.
+eliminaTuplos([E|T], D, R) :-
+    memberchk(E, D), !,
+    eliminaTuplos(T, D, R).
+eliminaTuplos([H|T], D, [H|R]) :-
+    eliminaTuplos(T, D, R).
+
+% ----------------------------------------------------------------------------------------------
 % -----------------------------------Invariantes para a remoção---------------------------------
 % ----------------------------------------------------------------------------------------------
 
@@ -203,7 +218,7 @@ remocao(T) :- assert(T),!,fail.
 
 -centro_saude(Id,N,M,T,E):: (procura(Id,centro_saude(Id,N,M,T,E),L),
 							comprimento(L,R),
-							R == 1). 
+							R == 1).
 
 -staff(Id,Idcs,N,E):: (procura(Id,staff(Id,Idcs,N,E),L),
 							comprimento(L,R),
@@ -232,7 +247,7 @@ remocao(T) :- assert(T),!,fail.
 
 +centro_saude(Id,_,_,_,_):: (procura(Id,centro_saude(Id,_,_,_,_),L),
 							comprimento(L,R),
-							R == 1). 
+							R == 1).
 
 +staff(Id,_,_,_):: (procura(Id,staff(Id,_,_,_),L),
 							comprimento(L,R),
@@ -315,28 +330,6 @@ removerVacinacao(Ids,Idu,D) :-
 	retrocesso(vacinacao_Covid(Ids,Idu,D,V,T)).
 
 % ----------------------------------------------------------------------------------------------
-% Predicado que identifica as pessoas vacinadas.
-% ----------------------------------------------------------------------------------------------
-
-vacinados(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,2)),V1),
-	removeRepetidos(V1,V).
-
-% ----------------------------------------------------------------------------------------------
-% Predicado que identifica as pessoas a quem falta a segunda toma da vacina.
-% ----------------------------------------------------------------------------------------------
-
-vacinadosPrimeiraToma(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,1),nao(vacinacao_Covid(_,Id,_,_,2))),V).
-
-% ----------------------------------------------------------------------------------------------
-% Predicado que identifica as pessoas não vacinadas.
-% ----------------------------------------------------------------------------------------------
-
-naoVacinados(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
-
-% ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na primeira fase.
 % ----------------------------------------------------------------------------------------------
 
@@ -367,19 +360,21 @@ profissao1_fase_vacinacao(V) :-
 % ----------------------------------------------------------------------------------------------
 
 doencas1_fase_vacinacao(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,L,_),(pertence('Doença Pulmonar Obstrutiva',L);pertence('Doenças Cardiovasculares',L);pertence('Hipertensão',L))),V).
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,L,_),(pertence('Doença Pulmonar Obstrutiva',L);pertence('Doenças Cardiovasculares',L))),V).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na segunda fase.
 % ----------------------------------------------------------------------------------------------
 
 fase2_vacinacao(V) :-
+	fase1_vacinacao(F),
 	idade2_fase_vacinacao(I),
 	profissao2_fase_vacinacao(P),
 	concat(I,P,L),
 	doencas2_fase_vacinacao(D),
 	concat(L,D,V1),
-	removeRepetidos(V1,V).
+	removeRepetidos(V1,V2),
+	eliminaTuplos(V2,F,V).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na segunda fase devido à sua idade.
@@ -401,6 +396,31 @@ profissao2_fase_vacinacao(V) :-
 
 doencas2_fase_vacinacao(V) :-
 	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,L,_),(pertence('Diabetes',L);pertence('Obesidade',L);pertence('Asma',L);pertence('Cancro',L))),V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas vacinadas.
+% ----------------------------------------------------------------------------------------------
+
+vacinados(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,2)),V1),
+	removeRepetidos(V1,V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas a quem falta a segunda toma da vacina.
+% ----------------------------------------------------------------------------------------------
+
+vacinadosPrimeiraToma(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,_,_,1),nao(vacinacao_Covid(_,Id,_,_,2))),V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas não vacinadas.
+% ----------------------------------------------------------------------------------------------
+
+naoVacinados(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
+
+
+
 
 
 
