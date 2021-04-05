@@ -393,6 +393,18 @@ numeroPessoasVacinadasfase2(V) :-
 	V is T.
 
 % ----------------------------------------------------------------------------------------------
+% Predicado que retorna as vacinações feitas entre duas datas.
+% Extensão do predicado vacinacaoEntreDatas: Data, Data, Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+datasLimiteVacinacao(D1,D2,V) :-
+	comparaDatas(D1,V,V),comparaDatas(D2,V,D2).
+
+vacinacaoEntreDatas(D1,D2,V) :-
+	procura((Ids,Idu,D,M,T),(vacinacao_Covid(Ids,Idu,D,M,T),datasLimiteVacinacao(D1,D2,D)),L),
+	removeRepetidos(L,V).
+
+% ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na primeira fase.
 % Extensão do predicado fase1_vacinacao: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
