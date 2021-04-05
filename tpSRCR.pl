@@ -74,9 +74,10 @@ vacinacao_Covid(2, 2, 2021-01-20, 'Pfizer', 1).
 vacinacao_Covid(3, 7, 2021-05-24, 'Astrazeneca', 1).
 vacinacao_Covid(3, 7, 2021-05-15, 'Astrazeneca', 2).
 vacinacao_Covid(6, 8, 2021-08-15, 'Astrazeneca', 1).
-vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
 vacinacao_Covid(2, 6, 2021-06-01, 'Pfizer', 1).
 vacinacao_Covid(2,6, 2021-06-16, 'Pfizer', 2).
+
+vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
 
 % ------------------------------------------------------------------------------------------------------------------------------------------
 % ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho que foram retirados de fichas das aulas --------------
@@ -131,7 +132,7 @@ comparaDatas(Y1-M1-D1,Y2-M2-D2,Y2-M2-D2) :- Y2 > Y1;
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que cria uma nova lista sem os repetidos da lista original.
-% Extensão do predicado semRepetidos: Lista,Lista -> {V,F}.
+% Extensão do predicado removeRepetidos: Lista,Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 removeRepetidos([],[]).
@@ -270,7 +271,7 @@ eliminaTuplos([H|T], D, [H|R]) :-
 % ----------------------------------------------------------------------------------------------
 
 % ----------------------------------------------------------------------------------------------
-% Registar Utentes.
+% Predicado que regista Utentes.
 % Extensão do predicado registarUtente: Id_Utente, Número de Segurança_Social, Nome, Data Nascimento, Email, Telefone, Morada, Profissão, [Doenças_Crónicas], CentroSaúde -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
@@ -278,7 +279,7 @@ registarUtente(Id,Nss,N,D,E,T,M,P,DC,CS) :-
 	evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
 
 % ----------------------------------------------------------------------------------------------
-% Registar Centros de Saúde.
+% Predicado que regista Centros de Saúde.
 % Extensão do predicado registarCentro: Id_Centro, Nome, Morada, Telefone, Email -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
@@ -286,7 +287,7 @@ registarCentro(Id,N,M,T,E) :-
 	evolucao(centro_saude(Id,N,M,T,E)).
 
 % ----------------------------------------------------------------------------------------------
-% Registar Staffs.
+% Predicado que regista Staffs.
 % Extensão do predicado registarStaff: Id_Staff, Id_Centro, Nome, Email -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
@@ -294,7 +295,7 @@ registarStaff(Id,Idcs,N,E) :-
 	evolucao(staff(Id,Idcs,N,E)).
 
 % ----------------------------------------------------------------------------------------------
-% Registar Vacinações de Covid.
+% Predicado que regista Vacinações de Covid.
 % Extensão do predicado registarVacinacao: Id_Staff, Id_Utente, Data, Vacina, Toma -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
@@ -302,7 +303,7 @@ registarVacinacao(Ids,Idu,D,V,T) :-
 	evolucao(vacinacao_Covid(Ids,Idu,D,V,T)).
 
 % ----------------------------------------------------------------------------------------------
-% Remover Utentes.
+% Predicado que remove Utentes.
 % Extensão do predicado removerUtente: Id_Utente, Número de Segurança_Social, Nome, Data Nascimento, Email, Telefone, Morada, Profissão, [Doenças_Crónicas], CentroSaúde -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
@@ -310,7 +311,7 @@ removerUtentes(Id,Nss,N,D,E,T,M,P,DC,CS) :-
 	retrocesso(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
 
 % ----------------------------------------------------------------------------------------------
-% Remover Centros de Saúde.
+% Predicado que remove Centros de Saúde.
 % Extensão do predicado removerCentro: Id_Centro, Nome, Morada, Telefone, Email -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
@@ -318,7 +319,7 @@ removerCentros(Id) :-
 	retrocesso(centro_saude(Id,N,M,T,E)).
 
 % ----------------------------------------------------------------------------------------------
-% Remover Staff.
+% Predicado que remove Staff.
 % Extensão do predicado removerStaff: Id_Staff, Id_Centro, Nome, Email -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
@@ -326,12 +327,70 @@ removerStaff(Id) :-
 	retrocesso(staff(Id,Idcs,N,E)).
 
 % ----------------------------------------------------------------------------------------------
-% Remover Vacinações de Covid.
+% Predicado que remove Vacinações de Covid.
 % Extensão do predicado removerVacinacao: Id_Staff, Id_Utente, Data, Vacina, Toma -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 removerVacinacao(Ids,Idu,D) :-
 	retrocesso(vacinacao_Covid(Ids,Idu,D,V,T)).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que retorna os staffs que trabalham num determinado centro de saúde.
+% Extensão do predicado getStaffCS: Id_Centro, Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+getStaffCS(CS,V) :-
+	procura(Nome,staff(_,CS,Nome,_),V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que retorna os utentes que estão associados a um determinado centro de saúde.
+% Extensão do predicado getUtenteCS: Id_Centro, Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+getUtenteCS(CS,V) :-
+	procura(Nome,utente(_,_,Nome,_,_,_,_,_,_,CS),V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que retorna o número de vacinações feitas na 1ª fase de Vacinação.
+% Extensão do predicado numeroVacinacoesfase1: Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+numeroVacinacoesfase1(V) :- 
+	procura(Id,(vacinacao_Covid(_,Id,D,_,_),comparaDatas(2021-01-01,D,D),comparaDatas(2021-03-31,D,2021-03-31)),L),
+	comprimento(L,T),
+	V is T.
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que retorna o número de vacinações feitas na 2ª fase de Vacinação.
+% Extensão do predicado numeroVacinacoesfase2: Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+numeroVacinacoesfase2(V) :- 
+	procura(Id,(vacinacao_Covid(_,Id,D,_,_),comparaDatas(2021-04-01,D,D),comparaDatas(2021-07-31,D,2021-07-31)),L),
+	comprimento(L,T),
+	V is T.
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que retorna o número de pessoas vacinadas na 1ª fase de Vacinação.
+% Extensão do predicado numeroPessoasVacinadasfase1: Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+numeroPessoasVacinadasfase1(V) :- 
+	procura(Id,(vacinacao_Covid(_,Id,D,_,_),comparaDatas(2021-01-01,D,D),comparaDatas(2021-03-31,D,2021-03-31)),V1),
+	removeRepetidos(V1,L),
+	comprimento(L,T),
+	V is T.
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que retorna o número de pessoas vacinadas na 2ª fase de Vacinação.
+% Extensão do predicado numeroPessoasVacinadasfase2: Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+numeroPessoasVacinadasfase2(V) :- 
+	procura(Id,(vacinacao_Covid(_,Id,D,_,_),comparaDatas(2021-04-01,D,D),comparaDatas(2021-07-31,D,2021-07-31)),V1),
+	removeRepetidos(V1,L),
+	comprimento(L,T),
+	V is T.
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na primeira fase.
