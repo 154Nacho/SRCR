@@ -174,7 +174,7 @@ evolucao( Termo ) :- procura(Invariante, +Termo::Invariante, Lista),
 % ----------------------------------------------------------------------------------------------
 
 retrocesso( Termo ) :- procura(Invariante, -Termo::Invariante, Lista),
-					   testar( Lista ),
+					   teste( Lista ),
 					   remocao( Termo ).
 
 % ----------------------------------------------------------------------------------------------
@@ -312,7 +312,7 @@ removerUtentes(Id,Nss,N,D,E,T,M,P,DC,CS) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que remove Centros de Saúde.
-% Extensão do predicado removerCentro: Id_Centro, Nome, Morada, Telefone, Email -> {V,F}.
+% Extensão do predicado removerCentros: Id_Centro, Nome, Morada, Telefone, Email -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 removerCentros(Id) :-
