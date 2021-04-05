@@ -31,8 +31,8 @@
 % --------------- Base de Conhecimento ------------------
 % -------------------------------------------------------
 
-utente(1, 12345678901, 'João da Costa e Campos', 1935-05-03, 'jcc@srcr.pt', '911111111', 'Rua das Adegas Felizes, 12, 1ª Cave', 'Reformado', ['Doenças Reumáticas','Cancro'], 5). % Elegível para 1ª fase por idade.
-utente(17, 22990000000, 'Almira da Cruz Santos', 1910-05-01, 'adcs@srcr.pt', '928888888', 'Rua da Alegria, 1', 'Reformada', [], 1). % Elegível para 1ª fase por idade.
+utente(1, 12345678901, 'João da Costa e Campos', 1935-05-03, 'jcc@srcr.pt', 911111111, 'Rua das Adegas Felizes, 12, 1ª Cave', 'Reformado', ['Doenças Reumáticas','Cancro'], 5). % Elegível para 1ª fase por idade.
+utente(17, 22990000000, 'Almira da Cruz Santos', 1910-05-01, 'adcs@srcr.pt', 928888888, 'Rua da Alegria, 1', 'Reformada', [], 1). % Elegível para 1ª fase por idade.
 utente(10, 58210227854, 'Maria Beatriz Araújo Lacerda', 1989-07-27, 'mbal@srcr.pt', 921111111, 'Rua do Galo Barcelonete, 136', 'Cabeleireiro', ['Doença Pulmonar Obstrutiva'], 4). % Elegível para 1ª fase por doença.
 utente(14, 88888855555, 'Luís Parente Pacheco Martins', 1964-08-04, 'lppm@srcr.pt', 925555555, 'Rua dos Cabeços Lamparinos, 80', 'Eletricista', ['Doenças Cardiovasculares'], 4). % Elegível para 1ª fase por doença.
 utente(4, 23345886912, 'Jesualdo Peza-Mor', 1963-11-14, 'jpm@srcr.pt', 914444444, 'Estrada do Sossego, Km10', 'Enfermeiro', ['Doenças Reumáticas', 'Colesterol'], 2). % Elegível para 1ª fase por profissão.
@@ -306,7 +306,7 @@ registarVacinacao(Ids,Idu,D,V,T) :-
 % Extensão do predicado removerUtente: Id_Utente, Número de Segurança_Social, Nome, Data Nascimento, Email, Telefone, Morada, Profissão, [Doenças_Crónicas], CentroSaúde -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
-removerUtentes(Id) :-
+removerUtentes(Id,Nss,N,D,E,T,M,P,DC,CS) :-
 	retrocesso(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
 
 % ----------------------------------------------------------------------------------------------
@@ -335,6 +335,7 @@ removerVacinacao(Ids,Idu,D) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na primeira fase.
+% Extensão do predicado fase1_vacinacao: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 fase1_vacinacao(V) :-
@@ -347,6 +348,7 @@ fase1_vacinacao(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na primeira fase devido à sua idade.
+% Extensão do predicado idade1_fase_vacinacao: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 idade1_fase_vacinacao(V) :-
@@ -354,6 +356,7 @@ idade1_fase_vacinacao(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na primeira fase devido à sua profissão.
+% Extensão do predicado profissao1_fase_vacinacao: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 profissao1_fase_vacinacao(V) :-
@@ -361,6 +364,7 @@ profissao1_fase_vacinacao(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na primeira fase devido às suas doenças crónicas.
+% Extensão do predicado doencas1_fase_vacinacao: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 doencas1_fase_vacinacao(V) :-
@@ -368,6 +372,7 @@ doencas1_fase_vacinacao(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na segunda fase.
+% Extensão do predicado fase2_vacinacao: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 fase2_vacinacao(V) :-
@@ -382,6 +387,7 @@ fase2_vacinacao(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na segunda fase devido à sua idade.
+% Extensão do predicado idade2_fase_vacinacao: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 idade2_fase_vacinacao(V) :-
@@ -389,6 +395,7 @@ idade2_fase_vacinacao(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na segunda fase devido à sua profissão.
+% Extensão do predicado profissao2_fase_vacinacao: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 profissao2_fase_vacinacao(V) :-
@@ -396,6 +403,7 @@ profissao2_fase_vacinacao(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na segunda fase devido às suas doenças crónicas.
+% Extensão do predicado doencas2_fase_vacinacao: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 doencas2_fase_vacinacao(V) :-
@@ -403,6 +411,7 @@ doencas2_fase_vacinacao(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas vacinadas.
+% Extensão do predicado vacinados: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 vacinados(V) :-
@@ -411,6 +420,7 @@ vacinados(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas a quem falta a segunda toma da vacina.
+% Extensão do predicado vacinadosPrimeiraToma: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 vacinadosPrimeiraToma(V) :-
@@ -418,6 +428,7 @@ vacinadosPrimeiraToma(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas não vacinadas.
+% Extensão do predicado naoVacinados: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 naoVacinados(V) :-
@@ -425,6 +436,7 @@ naoVacinados(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas mal vacinadas na 1ª fase.
+% Extensão do predicado malVacinadosfase1: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 malVacinadosfase1(V) :-
@@ -436,6 +448,7 @@ malVacinadosfase1(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas mal vacinadas na 2ª fase.
+% Extensão do predicado malVacinadosfase2: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 malVacinadosfase2(V) :-
@@ -447,6 +460,7 @@ malVacinadosfase2(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas não vacinadas e que são candidatas a vacinação na 1ª fase.
+% Extensão do predicado candidatosVacinacaofase1: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------	
 
 candidatosVacinacaofase1(V) :-
@@ -457,6 +471,7 @@ candidatosVacinacaofase1(V) :-
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas não vacinadas e que são candidatas a vacinação na 2ª fase.
+% Extensão do predicado candidatosVacinacaofase2: Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------	
 
 candidatosVacinacaofase2(V) :-
@@ -464,19 +479,3 @@ candidatosVacinacaofase2(V) :-
 	removeRepetidos(V1,V2),
 	fase2_vacinacao(F),
 	eliminaTuplos(F,V2,V).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
