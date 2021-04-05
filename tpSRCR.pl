@@ -64,15 +64,19 @@ staff(4, 1, 'Jaime Oliveira', 'jo@srcr.pt').
 staff(5, 3, 'Benjamin Otávio Teixeira', 'bot@srcr.pt').
 staff(6, 5, 'Sérgio Batedor Oliveira', 'sbo@srcr.pt').
 
-vacinacao_Covid(1, 1, 2021-05-5, 'Pfizer', 1).
-vacinacao_Covid(6, 1, 2021-05-19, 'Pfizer', 2).
-vacinacao_Covid(2, 2, 2021-04-20, 'Pfizer', 1).
+vacinacao_Covid(1, 1, 2021-01-5, 'Pfizer', 1).
+vacinacao_Covid(1, 17, 2021-01-5, 'Pfizer', 1).
+vacinacao_Covid(1, 10, 2021-01-5, 'Pfizer', 1).
+vacinacao_Covid(1, 14, 2021-01-5, 'Pfizer', 1).
+vacinacao_Covid(6, 1, 2021-01-19, 'Pfizer', 2).
+vacinacao_Covid(2, 2, 2021-01-20, 'Pfizer', 1).
+
 vacinacao_Covid(3, 7, 2021-05-24, 'Astrazeneca', 1).
-vacinacao_Covid(3, 7, 2021-06-15, 'Astrazeneca', 2).
+vacinacao_Covid(3, 7, 2021-05-15, 'Astrazeneca', 2).
 vacinacao_Covid(6, 8, 2021-08-15, 'Astrazeneca', 1).
-vacinacao_Covid(1, 15, 2021-07-31, 'Astrazeneca', 1).
-vacinacao_Covid(2, 14, 2021-06-01, 'Pfizer', 1).
-vacinacao_Covid(2,14, 2021-06-16, 'Pfizer', 2).
+vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
+vacinacao_Covid(2, 6, 2021-06-01, 'Pfizer', 1).
+vacinacao_Covid(2,6, 2021-06-16, 'Pfizer', 2).
 
 % ------------------------------------------------------------------------------------------------------------------------------------------
 % ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho que foram retirados de fichas das aulas --------------
@@ -419,12 +423,47 @@ vacinadosPrimeiraToma(V) :-
 naoVacinados(V) :-
 	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),nao(vacinacao_Covid(_,Id,_,_,_))),V).
 
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas mal vacinadas na 1ª fase.
+% ----------------------------------------------------------------------------------------------
 
+malVacinadosfase1(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,D,_,_),comparaDatas(2021-01-01,D,D),comparaDatas(2021-03-31,D,2021-03-31)),V1),
+	removeRepetidos(V1,V2),
+	fase1_vacinacao(L),
+	concat(V2,L,V3),
+	eliminaTuplos(V3,L,V).
 
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas mal vacinadas na 2ª fase.
+% ----------------------------------------------------------------------------------------------
 
+malVacinadosfase2(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,D,_,_),comparaDatas(2021-04-01,D,D),comparaDatas(2021-07-31,D,2021-07-31)),V1),
+	removeRepetidos(V1,V2),
+	fase2_vacinacao(L),
+	concat(V2,L,V3),
+	eliminaTuplos(V3,L,V).
 
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas não vacinadas e que são candidatas a vacinação na 1ª fase.
+% ----------------------------------------------------------------------------------------------	
 
+candidatosVacinacaofase1(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,D,_,_),comparaDatas(2021-01-01,D,D),comparaDatas(2021-03-31,D,2021-03-31)),V1),
+	removeRepetidos(V1,V2),
+	fase1_vacinacao(F),
+	eliminaTuplos(F,V2,V).
 
+% ----------------------------------------------------------------------------------------------
+% Predicado que identifica as pessoas não vacinadas e que são candidatas a vacinação na 2ª fase.
+% ----------------------------------------------------------------------------------------------	
+
+candidatosVacinacaofase2(V) :-
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,_,_),vacinacao_Covid(_,Id,D,_,_),comparaDatas(2021-04-01,D,D),comparaDatas(2021-07-31,D,2021-07-31)),V1),
+	removeRepetidos(V1,V2),
+	fase2_vacinacao(F),
+	eliminaTuplos(F,V2,V).
 
 
 
