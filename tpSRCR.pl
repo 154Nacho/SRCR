@@ -85,7 +85,7 @@ vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que verifica se um elemento pertece a uma determinada lista.
-% Extensão do predicado pertence: X,Lista -> {V,F}.
+% Extensão do predicado pertence: X, Lista -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 pertence(H,[H|_T]).
@@ -93,8 +93,18 @@ pertence(X,[H|_T]) :-
 	X \= H,
 pertence(X,_T).
 
+% ----------------------------------------------------------------------------------------------
+% Predicado que adiciona um elemento a uma lista.
+% Extensão do predicado add: X, Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
 add(E,L,L) :- pertence(E,L).
 add(E, L, [E|L]).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que concatena duas listas.
+% Extensão do predicado concat: Lista, Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
 
 concat([], L, L).
 concat([H|T], L, R) :- add(H, N, R), concat(T, L, N).
