@@ -75,7 +75,6 @@ vacinacao_Covid(3, 7, 2021-05-15, 'Astrazeneca', 2).
 vacinacao_Covid(6, 8, 2021-08-15, 'Astrazeneca', 1).
 vacinacao_Covid(2, 6, 2021-06-01, 'Pfizer', 1).
 vacinacao_Covid(2,6, 2021-06-16, 'Pfizer', 2).
-
 vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
 
 % ------------------------------------------------------------------------------------------------------------------------------------------
@@ -299,6 +298,11 @@ eliminaTuplos([H|T], D, [H|R]) :-
 
 % ----------------------------------------------------------------------------------------------
 % ---------------------------------------Funcionalidades----------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que devolve o número de vacinas tomadas por um determinado utente.
+% Extensão do predicado qtdVacUtente: Id_Utente, QT -> {V,F}.
 % ----------------------------------------------------------------------------------------------
 
 qtdVacUtente(Id,QT):- procura(Id,(vacinacao_Covid(_,Id,_,_,_)),R),comprimento(R,QT).
@@ -583,3 +587,11 @@ candidatosVacinacaofase2(V) :-
 	removeRepetidos(V1,V2),
 	fase2_vacinacao(F),
 	eliminaTuplos(F,V2,V).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que verifica se o conhecimento existe na base de conhecimento.
+% Extensão do predicado si: Questao, Resposta -> {V,F}.
+% ----------------------------------------------------------------------------------------------	
+
+si(Questao, verdadeiro) :- 	Questao.
+si(Questao, falso) :- 	-Questao.
