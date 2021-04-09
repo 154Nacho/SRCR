@@ -11,7 +11,7 @@
 % Em relação a doenças crónicas, na primeira fase de vacinação serão vacinadas pessoas com problemas cardíacos e doenças respiratórias crónicas.
 % ----------------------------------------------------------------------------------------------
 
-primeira_fase_Vacinacao: Idade > 80; 'Médico'; 'Enfermeiro'; 'Militar'; 'Doença Pulmonar Obstrutiva'; 'Doenças Cardiovasculares'; 'Hipertensão'.
+%primeira_fase_Vacinacao: Idade > 80; 'Médico'; 'Enfermeiro'; 'Militar'; 'Doença Pulmonar Obstrutiva'; 'Doenças Cardiovasculares'; 'Hipertensão'.
 
 % ----------------------------------------------------------------------------------------------
 % 2ª fase de vacinação, estende-se desde 01-04-2021 até 31-07-2021.
@@ -20,7 +20,7 @@ primeira_fase_Vacinacao: Idade > 80; 'Médico'; 'Enfermeiro'; 'Militar'; 'Doenç
 % Em relação a doenças crónicas, na segunda fase de vacinação serão vacinadas pessoas com diabetes, obesidade, asma e cancro.
 % ----------------------------------------------------------------------------------------------
 
-segunda_fase_Vacinacao: Idade > 50; 'Professor'; 'Estudante'; 'Diabetes'; 'Obesidade'; 'Asma'; 'Cancro'.
+%segunda_fase_Vacinacao: Idade > 50; 'Professor'; 'Estudante'; 'Diabetes'; 'Obesidade'; 'Asma'; 'Cancro'.
 
 % ----------------------------------------------------------------------------------------------
 % Numa possível 3ª fase, será vacinada toda a restante população elegível, que poderá ser igualmente priorizada.
