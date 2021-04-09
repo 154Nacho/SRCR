@@ -242,7 +242,7 @@ eliminaTuplos([H|T], D, [H|R]) :-
 									comprimento(L,R),
 									R =< 2).
 
-% Não permitir a remoção de utentes e de staff se existirem vacinações de covid a eles associadas.>
+% Não permitir a remoção de utentes e de staff se existirem vacinações de covid a eles associadas.
 -utente(Id,Nss,N,D,E,T,M,P,DC,CS):: (procura(Id,vacinacao_Covid(Ids,Id,D,V,T),L),
 									comprimento(L,R),
 									R == 0).
