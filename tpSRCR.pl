@@ -17,9 +17,8 @@
 % Flags iniciais.
 % ----------------------------------------------------------------------------------------------
 
-:- set_prolog_flag( discontiguous_warnings,off ).
-:- set_prolog_flag( single_var_warnings,off ).
-:- set_prolog_flag( unknown, fail ).
+:- style_check(-discontiguous).
+:- style_check(-singleton).
 
 % ----------------------------------------------------------------------------------------------
 % Definição de Invariantes.
@@ -241,9 +240,9 @@ eliminaTuplos([H|T], D, [H|R]) :-
 
 -vacinacao_Covid(Ids,Idu,D,V,T):: (procura(Idu,vacinacao_Covid(Ids,Idu,D,V,T),L),
 									comprimento(L,R),
-									R == 1).
+									R =< 2).
 
-% Não permitir a remoção de utentes e de staff se existirem vacinações de covid a eles associadas.
+% Não permitir a remoção de utentes e de staff se existirem vacinações de covid a eles associadas.>
 -utente(Id,Nss,N,D,E,T,M,P,DC,CS):: (procura(Id,vacinacao_Covid(Ids,Id,D,V,T),L),
 									comprimento(L,R),
 									R == 0).
@@ -273,12 +272,36 @@ eliminaTuplos([H|T], D, [H|R]) :-
 									R == 1).
 
 % Ids do utente e do staff têm de existir para inserir uma vacinação.
-+vacinacao_Covid(Ids,Idu,D,V,T):: (utente(Id,Nss,N,D,E,T,M,P,DC,CS),
-									staff(Id,Idcs,N,E)).
++vacinacao_Covid(Ids,Idu,D,V,T):: (procura((Ids,Idu),(utente(Idu,_,_,_,_,_,_,_,_,_),staff(Ids,_,_,_)),R),
+									comprimento(R,N), N==1).
+
+
+% tomar a mesma vacina
++vacinacao_Covid(_,Idu,_,V,T):: (
+								(T==1;(procura(Idu,(vacinacao_Covid(_,Idu,_,V,_)),R),
+								comprimento(R,N),N==2 )
+								)).
+
+% toma a segunda depois da primeira
++vacinacao_Covid(_,Idu,_,_,T):: (
+								(utente(Idu,_,_,_,_,_,_,_,_,_)),
+								qtdVacUtente(Idu,QT), T=<2,
+								T =:= QT
+								).
+
+% segunda dose depois da primeira
++vacinacao_Covid(_,Idu,A-M-D,_,T)::(
+									(T==1;
+									(vacinacao_Covid(_,Idu,A2-M2-D2,_,1)),
+									T==2,
+									(D>D2,M==M2,A==A2;M>M2,A==A2;A>A2)
+									)).
 
 % ----------------------------------------------------------------------------------------------
 % ---------------------------------------Funcionalidades----------------------------------------
 % ----------------------------------------------------------------------------------------------
+
+qtdVacUtente(Id,QT):- procura(Id,(vacinacao_Covid(_,Id,_,_,_)),R),comprimento(R,QT).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que regista Utentes.
