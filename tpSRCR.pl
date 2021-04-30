@@ -77,6 +77,47 @@ vacinacao_Covid(2, 6, 2021-06-01, 'Pfizer', 1).
 vacinacao_Covid(2,6, 2021-06-16, 'Pfizer', 2).
 vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
 
+% ----------------------------------------------------------------------------------------------
+% ------------------------------- Conhecimento Imperfeito --------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+-utente(Id,Nss,N,D,E,T,M,P,DC,CS) :- nao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)), 
+									 nao(excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS))).
+
+% ----------------------------------------------------------------------------------------------
+% ------------------------------- Conhecimento Impreciso ---------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% Utente com dois números de Segurança Social.
+utente(20, {19283018273, 00033345901}, 'Francisco Correia Antonieto Franco', 1950-03-05, 'fcaf@srcr.pt', 930000000, 'Rua das Amoreiras, 152', 'Reformado', ['Osteoporose', 'Parkinson'], 2).
+excecao(utente(20, 19283018273, 'Francisco Correia Antonieto Franco', 1950-03-05, 'fcaf@srcr.pt', 930000000, 'Rua das Amoreiras, 152', 'Reformado', ['Osteoporose', 'Parkinson'], 2)).
+excecao(utente(20, 00033345901, 'Francisco Correia Antonieto Franco', 1950-03-05, 'fcaf@srcr.pt', 930000000, 'Rua das Amoreiras, 152', 'Reformado', ['Osteoporose', 'Parkinson'], 2)).
+
+%Utente com dois números de telemóvel.
+utente(21, 34554334567, 'Antonio Manuel Cascão Xisto', 1968-03-01, 'amcx@srcr.pt', {931111111, 932222222}, 'Largo dos Peões, 25', 'Pedreiro', ['Asma', 'Hipertensão'], 4).
+excecao(utente(21, 34554334567, 'Antonio Manuel Cascão Xisto', 1968-03-01, 'amcx@srcr.pt', 931111111, 'Largo dos Peões, 25', 'Pedreiro', ['Asma', 'Hipertensão'], 4)).
+excecao(utente(21, 34554334567, 'Antonio Manuel Cascão Xisto', 1968-03-01, 'amcx@srcr.pt', 932222222, 'Largo dos Peões, 25', 'Pedreiro', ['Asma', 'Hipertensão'], 4)).
+
+% ----------------------------------------------------------------------------------------------
+% ------------------------------- Conhecimento Incerto -----------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% Utente com um número de Segurança Social desconhecido.
+utente(18, nissDesconhecido, 'Pedro Emanuel Da Silva Oliveira', 1970-11-08, 'peso@srcr.pt', 929999999, 'Travesa das Avestruzes, 32', 'Padre', ['Diabetes', 'Cancro'], 3).
+excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)) :- utente(Id,nissDesconhecido,N,D,E,T,M,P,DC,CS).
+
+% Utente com um número de telemóvel desconhecido.
+utente(19, 10022993871, 'Tiago Pinto Quintas Barros', 2001-01-05, 'tpqb@srcr.pt', telemovelDesconhecido, 'Rua de Fragoso, 44', 'Estudante', [], 1).
+excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)) :- utente(Id,Nss,N,D,E,telemovelDesconhecido,M,P,DC,CS).
+
+% ----------------------------------------------------------------------------------------------
+% ------------------------------- Conhecimento Interdito ---------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% Utente
+utente(22, 43567859643, 'Quintino Moreira Teixeira Grafo', dataInterdita, 'qmtg@srcr.pt', 933333333, 'Rua dos Patos Cegos, 1', 'Pescador', [], 5).
+nulo(dataInterdita).
+
 % ------------------------------------------------------------------------------------------------------------------------------------------
 % ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho que foram retirados de fichas das aulas --------------
 % ------------------------------------------------------------------------------------------------------------------------------------------
@@ -295,6 +336,14 @@ eliminaTuplos([H|T], D, [H|R]) :-
 									T==2,
 									(D>D2,M==M2,A==A2;M>M2,A==A2;A>A2)
 									)).
+
+% ----------------------------------------------------------------------------------------------
+% -------------------------Invariantes para o Conhecimento Interdito----------------------------
+% ----------------------------------------------------------------------------------------------
+
++utente(Id,Nss,N,D,E,T,M,P,DC,CS) :: (procura(D,(utente(Id,Nss,N,D,E,T,M,P,DC,CS),nao(nulo(D))),R),
+									 comprimento(R,N),
+									 N == 0).
 
 % ----------------------------------------------------------------------------------------------
 % ---------------------------------------Funcionalidades----------------------------------------
@@ -595,3 +644,4 @@ candidatosVacinacaofase2(V) :-
 
 si(Questao, verdadeiro) :- 	Questao.
 si(Questao, falso) :- 	-Questao.
+si(Questao, desconhecido) :- nao(Questao), nao(-Questao).
