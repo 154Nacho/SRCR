@@ -85,7 +85,13 @@ vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
 									 nao(excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS))).
 
 -centro_saude(Id,N,M,T,E) :- nao(centro_saude(Id,N,M,T,E)),
-							 nao(excecao(centro_saude(Id,N,M,T,E))).	
+							 nao(excecao(centro_saude(Id,N,M,T,E))).
+
+-staff(Id,Idcs,N,E) :- nao(staff(Id,Idcs,N,E)),
+					   nao(excecao(staff(Id,Idcs,N,E))).	
+
+-vacinacao_Covid(Ids,Idu,D,V,T) :- nao(vacinacao_Covid(Ids,Idu,D,V,T)),		
+								   nao(excecao(vacinacao_Covid(Ids,Idu,D,V,T))).	   							
 
 % ----------------------------------------------------------------------------------------------
 % ------------------------------- Conhecimento Impreciso ---------------------------------------
@@ -106,10 +112,32 @@ centro_saude(6, 'Centro de Saude Viana do Castelo', 'Rua Senhora da Agonia, 8', 
 excecao(centro_saude(6, 'Centro de Saude Viana do Castelo', 'Rua Senhora da Agonia, 8', 956666666, 'csvc@srcr.pt')).
 excecao(centro_saude(6, 'Centro de Saude Viana do Castelo', 'Rua Senhora da Agonia, 8', 956666666, 'cvsc@srcr.pt')).
 
-% Centro de Saúde com dois números de telemóvel
+% Centro de Saúde com dois números de telemóvel.
 centro_saude(7, 'Centro de Saude Sao Jorge', 'Travessa da Ilha das Flores, 229', {957777777, 958888888}, 'cssj@srcr.pt').
 excecao(centro_saude(7, 'Centro de Saude Sao Jorge', 'Travessa da Ilha das Flores, 229', 957777777, 'cssj@srcr.pt')).
 excecao(centro_saude(7, 'Centro de Saude Sao Jorge', 'Travessa da Ilha das Flores, 229', 958888888, 'cssj@srcr.pt')).
+
+% Staff que está associado a dois centros de saúde.
+staff(7, [2,4], 'Joaquim Alberto Incrivel Morais', 'jaim@srcr.pt').
+excecao(staff(7, 2, 'Joaquim Alberto Incrivel Morais', 'jaim@srcr.pt')).
+excecao(staff(7, 3, 'Joaquim Alberto Incrivel Morais', 'jaim@srcr.pt')).
+excecao(staff(7, 4, 'Joaquim Alberto Incrivel Morais', 'jaim@srcr.pt')).
+
+% Staff com dois emails.
+staff(8, 1, 'Tito Cerqueira Andrade Vieira', {'tcav@srcr.pt', 'vact@srcr.pt'}).
+excecao(staff(8, 1, 'Tito Cerqueira Andrade Vieira', 'tcav@srcr.pt')).
+excecao(staff(8, 1, 'Tito Cerqueira Andrade Vieira', 'vact@srcr.pt')).
+
+% Vacinação Covid com duas datas.
+vacinacao_Covid(6, 21, {2021-03-04, 2021-03-10}, 'Pfizer', 1).
+excecao(vacinacao_Covid(6, 21, 2021-03-04, 'Pfizer', 1)).
+excecao(vacinacao_Covid(6, 21, 2021-03-10, 'Pfizer', 1)).
+
+% Vacinação Covid com duas vacinas.
+
+vacinacao_Covid(3, 20, 2021-05-05, {'Pfizer', 'Astrazeneca'}, 2).
+excecao(vacinacao_Covid(3, 20, 2021-05-05, 'Pfizer', 2)).
+excecao(vacinacao_Covid(3, 20, 2021-05-05, 'Astrazeneca', 2)).
 
 % ----------------------------------------------------------------------------------------------
 % ------------------------------- Conhecimento Incerto -----------------------------------------
@@ -131,6 +159,22 @@ excecao(centro_saude(Id,N,M,T,E)) :- centro_saude(Id,nomeDesconhecido,M,T,E).
 centro_saude(9, 'Centro de Saude Olivais Sul', 'Rua dos Piriquitos, 50', 960000000 , emailDesconhecido).
 excecao(centro_saude(Id,N,M,T,E)) :- centro_saude(Id,N,M,T,emailDesconhecido).
 
+% Staff com id Centro de Saúde desconhecido.
+staff(9, centroDesconhecido, 'Pedro Manuel Marques Mota', 'pmmm@srcr.pt').
+excecao(staff(Id,Idcs,N,E)) :- staff(Id,centroDesconhecido,N,E).
+
+% Staff com nome desconhecido.
+staff(10, 2, nomeStaffDesconhecido, 'cccc@srcr.pt').
+excecao(staff(Id,Idcs,N,E)) :- staff(Id,Idcs,nomeStaffDesconhecido,E).
+
+% Vacinação Covid com id Utente desconhecido.
+vacinacao_Covid(2, utenteDesconhecido, 2021-05-07, 'Pfizer', 1).
+excecao(vacinacao_Covid(Ids,Idu,D,V,T)) :- vacinacao_Covid(Ids,utenteDesconhecido,D,V,T).
+
+% Vacinação Covid com vacina desconhecida.
+vacinacao_Covid(3, 18, 2021-01-10, vacinaDesconhecida, 2).
+excecao(vacinacao_Covid(Ids,Idu,D,V,T)) :- vacinacao_Covid(Ids,Idu,D,vacinaDesconhecida,T).
+
 % ----------------------------------------------------------------------------------------------
 % ------------------------------- Conhecimento Interdito ---------------------------------------
 % ----------------------------------------------------------------------------------------------
@@ -138,18 +182,42 @@ excecao(centro_saude(Id,N,M,T,E)) :- centro_saude(Id,N,M,T,emailDesconhecido).
 % Utente com uma data de nascimento interdita.
 utente(22, 43567859643, 'Quintino Moreira Teixeira Grafo', dataInterdita, 'qmtg@srcr.pt', 933333333, 'Rua dos Patos Cegos, 1', 'Pescador', [], 5).
 nulo(dataInterdita).
+excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)) :- utente(Id,Nss,N,dataInterdita,E,T,M,P,DC,CS).
 
 % Utente com um número de Segurança Social interdito.
 utente(23, segurancaSocialInterdita, 'William Carvalho Santos Silva', 1980-04-03, 'wcss@srcr.pt', 934444444, 'Rua do Alecrim, 2', 'Porteiro', ['Asma'], 3).
 nulo(segurancaSocialInterdita).
+excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)) :- utente(Id,segurancaSocialInterdita,N,D,E,T,M,P,DC,CS).
 
 % Centro de Saúde com nome interdito.
 centro_saude(10, nomeInterdito, 'Travessa das Picaretas, 10', 961111111, 'bbbb@srcr.pt').
 nulo(nomeInterdito).
+excecao(centro_saude(Id,N,M,T,E)) :- centro_saude(Id,nomeInterdito,M,T,E).
 
 % Centro de Saúde com número de telemóvel interdito.
 centro_saude(11, 'Centro de Saude Odivelas', 'Rua Sargento Coronel Frances, 4', numeroInterdito, 'csodv@srcr.pt').
 nulo(numeroInterdito).
+excecao(centro_saude(Id,N,M,T,E)) :- centro_saude(Id,N,M,numeroInterdito,E).
+
+% Staff com id Centro de Saúde interdito.
+staff(11, centroInterdito, 'Pedro Pereira Pauleta Aveiro', 'pppa@srcr.pt').
+nulo(centroInterdito).
+excecao(staff(Id,Idcs,N,E)) :- staff(Id,centroInterdito,N,E).
+
+% Staff com nome interdito.
+staff(12, 'Centro Saude Sao Pedro Do Sul', nomeStaffInterdito, 'ddddd@srcr.pt').
+nulo(nomeStaffInterdito).
+excecao(staff(Id,Idcs,N,E)) :- staff(Id,Idcs,nomeStaffInterdito,E).
+
+% Vacinação Covid com id Utente interdito.
+vacinacao_Covid(5, utenteInterdito, 2021-03-20, 'Astrazeneca', 1).
+nulo(utenteInterdito).
+excecao(vacinacao_Covid(Ids,Idu,D,V,T)) :- vacinacao_Covid(Ids,utenteInterdito,D,V,T).
+
+% Vacinação Covid com nome vacina interdito.
+vacinacao_Covid(3, 19, 2021-02-20, vacinaInterdita, 1).
+nulo(vacinaInterdita).
+excecao(vacinacao_Covid(Ids,Idu,D,V,T)) :- vacinacao_Covid(Ids,Idu,D,vacinaInterdita,T).
 
 % ------------------------------------------------------------------------------------------------------------------------------------------
 % ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho que foram retirados de fichas das aulas --------------
@@ -374,21 +442,37 @@ eliminaTuplos([H|T], D, [H|R]) :-
 % -------------------------Invariantes para o Conhecimento Interdito----------------------------
 % ----------------------------------------------------------------------------------------------
 
-+utente(Id,Nss,N,D,E,T,M,P,DC,CS) :: (procura(D,(utente(Id,Nss,N,D,E,T,M,P,DC,CS),nao(nulo(D))),R),
++utente(Id,Nss,N,D,E,T,M,P,DC,CS) :: (procura(D,(utente(22, 43567859643, 'Quintino Moreira Teixeira Grafo', D, 'qmtg@srcr.pt', 933333333, 'Rua dos Patos Cegos, 1', 											 'Pescador', [], 5),nao(nulo(D))),R),
 									 comprimento(R,N),
 									 N == 0).
 
-+utente(Id,Nss,N,D,E,T,M,P,DC,CS) :: (procura(Nss,(utente(Id,Nss,N,D,E,T,M,P,DC,CS),nao(nulo(Nss))),R),
++utente(Id,Nss,N,D,E,T,M,P,DC,CS) :: (procura(Nss,(utente(23, Nss, 'William Carvalho Santos Silva', 1980-04-03, 'wcss@srcr.pt', 934444444, 'Rua do 										 Alecrim, 2', 'Porteiro', ['Asma'], 3),nao(nulo(Nss))),R),
 									 comprimento(R,N),
 									 N == 0).									
 
-+centro_saude(Id,N,M,T,E) :: (procura(N,(centro_saude(Id,N,M,T,E),nao(nulo(N))),R),
++centro_saude(Id,N,M,T,E) :: (procura(N,(centro_saude(10, N, 'Travessa das Picaretas, 10', 961111111, 'bbbb@srcr.pt'),nao(nulo(N))),R),
 							 comprimento(R,N),
 							 N == 0).
 
-+centro_saude(Id,N,M,T,E) :: (procura(T,(centro_saude(Id,N,M,T,E),nao(nulo(T))),R),
++centro_saude(Id,N,M,T,E) :: (procura(T,(centro_saude(11, 'Centro de Saude Odivelas', 'Rua Sargento Coronel Frances, 4', T, 'csodv@srcr.pt'),nao(nulo(T))),R),
 							 comprimento(R,N),
-							 N == 0).							
+							 N == 0).
+
++staff(Id,Idcs,N,E) :: (procura(Idcs,(staff(11, centroInterdito, 'Pedro Pereira Pauleta Aveiro', 'pppa@srcr.pt'),nao(nulo(Idcs))),R),
+					   comprimento(R,N),
+					   N == 0).
+
++staff(Id,Idcs,N,E)	:: (procura(N,(staff(12, 'Centro Saude Sao Pedro Do Sul', nomeStaffInterdito, 'ddddd@srcr.pt'),nao(nulo(N))),R),
+					   comprimento(R,N),
+					   N == 0).		  
+					    												
++vacinacao_Covid(Ids,Idu,D,V,T) :: (procura(Idu,(vacinacao_Covid(5, utenteInterdito, 2021-03-20, 'Astrazeneca', 1),nao(nulo(Idu))),R),
+									comprimento(R,N),
+									N == 0).     
+
++vacinacao_Covid(Ids,Idu,D,V,T) :: (procura(V,(vacinacao_Covid(3, 19, 2021-02-20, vacinaInterdita, 1),nao(nulo(V))),R),
+									comprimento(R,N),
+									N == 0).								        
 
 % ----------------------------------------------------------------------------------------------
 % ---------------------------------------Funcionalidades----------------------------------------
