@@ -30,38 +30,38 @@
 % --------------- Base de Conhecimento ------------------
 % -------------------------------------------------------
 
-utente(1, 12345678901, 'João da Costa e Campos', 1935-05-03, 'jcc@srcr.pt', 911111111, 'Rua das Adegas Felizes, 12, 1ª Cave', 'Reformado', ['Doenças Reumáticas','Cancro'], 5). % Elegível para 1ª fase por idade.
+utente(1, 12345678901, 'Joao da Costa e Campos', 1935-05-03, 'jcc@srcr.pt', 911111111, 'Rua das Adegas Felizes, 12, 1ª Cave', 'Reformado', ['Doencas Reumaticas','Cancro'], 5). % Elegível para 1ª fase por idade.
 utente(17, 22990000000, 'Almira da Cruz Santos', 1910-05-01, 'adcs@srcr.pt', 928888888, 'Rua da Alegria, 1', 'Reformada', [], 1). % Elegível para 1ª fase por idade.
-utente(10, 58210227854, 'Maria Beatriz Araújo Lacerda', 1989-07-27, 'mbal@srcr.pt', 921111111, 'Rua do Galo Barcelonete, 136', 'Cabeleireiro', ['Doença Pulmonar Obstrutiva'], 4). % Elegível para 1ª fase por doença.
-utente(14, 88888855555, 'Luís Parente Pacheco Martins', 1964-08-04, 'lppm@srcr.pt', 925555555, 'Rua dos Cabeços Lamparinos, 80', 'Eletricista', ['Doenças Cardiovasculares'], 4). % Elegível para 1ª fase por doença.
-utente(4, 23345886912, 'Jesualdo Peza-Mor', 1963-11-14, 'jpm@srcr.pt', 914444444, 'Estrada do Sossego, Km10', 'Enfermeiro', ['Doenças Reumáticas', 'Colesterol'], 2). % Elegível para 1ª fase por profissão.
-utente(15, 10000100201, 'Bruno Felipe Enes Diaz', 2000-11-21, 'bfed@srcr.pt', 926666666, 'Rua dos Amareiros Ferrenhos, 137', 'Médico', [], 1). % Elegível para 1ª fase por profissão.
-utente(16, 93330201456, 'Pedro Miguel Ferreira Lemos', 1980-09-26, 'pmfl@srcr.pt', 927777777, 'Rua dos Maçaricos Portenhos, 154', 'Militar', ['Doenças Cardiovasculares', 'Visão', 'Hipertensão'], 4). % Elegível para 1ª fase por profissão e doença.
+utente(10, 58210227854, 'Maria Beatriz Araujo Lacerda', 1989-07-27, 'mbal@srcr.pt', 921111111, 'Rua do Galo Barcelonete, 136', 'Cabeleireiro', ['Doenca Pulmonar Obstrutiva'], 4). % Elegível para 1ª fase por doença.
+utente(14, 88888855555, 'Luis Parente Pacheco Martins', 1964-08-04, 'lppm@srcr.pt', 925555555, 'Rua dos Cabecos Lamparinos, 80', 'Eletricista', ['Doencas Cardiovasculares'], 4). % Elegível para 1ª fase por doença.
+utente(4, 23345886912, 'Jesualdo Peza-Mor', 1963-11-14, 'jpm@srcr.pt', 914444444, 'Estrada do Sossego, Km10', 'Enfermeiro', ['Doencas Reumáticas', 'Colesterol'], 2). % Elegível para 1ª fase por profissão.
+utente(15, 10000100201, 'Bruno Felipe Enes Diaz', 2000-11-21, 'bfed@srcr.pt', 926666666, 'Rua dos Amareiros Ferrenhos, 137', 'Medico', [], 1). % Elegível para 1ª fase por profissão.
+utente(16, 93330201456, 'Pedro Miguel Ferreira Lemos', 1980-09-26, 'pmfl@srcr.pt', 927777777, 'Rua dos Maçaricos Portenhos, 154', 'Militar', ['Doencas Cardiovasculares', 'Visao', 'Hipertensao'], 4). % Elegível para 1ª fase por profissão e doença.
 
-utente(2, 58203459103, 'Josefina Vivida da Paz', 1958-12-02, 'jvp@srcr.pt', 912222222, 'Av dos Castros Reais, 122, 3ºE', 'Professor', ['Asma', 'Diabetes'], 4). % Elegível para 2ª fase por idade,profissão e doença.
+utente(2, 58203459103, 'Josefina Vivida da Paz', 1958-12-02, 'jvp@srcr.pt', 912222222, 'Avenida dos Castros Reais, 122, 3ºE', 'Professor', ['Asma', 'Diabetes'], 4). % Elegível para 2ª fase por idade,profissão e doença.
 utente(7, 78990546351, 'Carminho Cunha Bastos', 1960-01-01, 'ccb@srcr.pr', 917777777, 'Rua do Mus-Vitalis, 56, R/C', 'Catequista', ['Parkinson', 'Osteoporose'], 2). % Elegível para 2ª fase por idade.
-utente(9, 09876543212, 'Maria Quintas Barros', 1950-12-31, 'mqb@srcr.pt', 919999999, 'Rua do Fragão, 44', 'Piloto de Aviões', ['Diabetes', 'Hipertensão', 'Visão'], 5). % Elegível para 2ª fase por idade e doença.
-utente(11, 01928374657, 'Ana Teresa Gião Gomes', 1947-02-12, 'atgg@srcr.pt', 922222222, 'Rua da Vuvuzela, 158', 'Youtuber', ['Alzheimer', 'Asma'], 5). % Elegível para 2ª fase por idade e doença.
+utente(9, 09876543212, 'Maria Quintas Barros', 1950-12-31, 'mqb@srcr.pt', 919999999, 'Rua do Fragao, 44', 'Piloto de Avioes', ['Diabetes', 'Hipertensao', 'Visao'], 5). % Elegível para 2ª fase por idade e doença.
+utente(11, 01928374657, 'Ana Teresa Giao Gomes', 1947-02-12, 'atgg@srcr.pt', 922222222, 'Rua da Vuvuzela, 158', 'Youtuber', ['Alzheimer', 'Asma'], 5). % Elegível para 2ª fase por idade e doença.
 utente(3, 98437219304, 'Ana Santa do Carmo', 1997-08-21, 'asc@srcr.pt', 913333333, 'Travessa do Jacob, 21', 'Estudante', [], 3). % Elegível para 2ª fase por profissão.
 utente(8, 55599911102, 'Francisco Correia Franco', 1999-04-03, 'fcf@srcr.pt', 918888888, 'Rua do Povo, 152', 'Estudante', [], 1).  % Elegível para 2ª fase por profissão.
-utente(12, 34543678769, 'João Manuel Peixe dos Santos', 1978-06-18, 'jmps@srcr.pt', 923333333, 'Rua dos Peixotos, 61, 4ªD', 'Contabilista', ['Obesidade'], 3). % Elegível para 2ª fase por doença.
+utente(12, 34543678769, 'Joao Manuel Peixe dos Santos', 1978-06-18, 'jmps@srcr.pt', 923333333, 'Rua dos Peixotos, 61, 4ªD', 'Contabilista', ['Obesidade'], 3). % Elegível para 2ª fase por doença.
 
-utente(5, 67483900221, 'Maria da Trindade Pascoal', 1985-05-05, 'mtp@srcr.pt', 915555555, 'Rua das Adegas da Rua, 15, 10 Esq/T', 'Historiador', ['Visão'], 1).
-utente(6, 34554367887, 'Florindo Teixo Figueirinha', 1974-04-25, 'ftf@srcr.pt', 916666666, 'Autódromo das Vagas, Garagem 123', 'Lojista', ['Hipertensão'], 3).
-utente(13, 21114599083, 'Paulo Nobre Sousa', 1994-10-10, 'pns@srcr.pt', 924444444, 'Rua dos Móveis Cerrados, 29', 'Engenheiro de Polímeros', [], 5).
+utente(5, 67483900221, 'Maria da Trindade Pascoal', 1985-05-05, 'mtp@srcr.pt', 915555555, 'Rua das Adegas da Rua, 15, 10 Esq/T', 'Historiador', ['Visao'], 1).
+utente(6, 34554367887, 'Florindo Teixo Figueirinha', 1974-04-25, 'ftf@srcr.pt', 916666666, 'Autodromo das Vagas, Garagem 123', 'Lojista', ['Hipertensao'], 3).
+utente(13, 21114599083, 'Paulo Nobre Sousa', 1994-10-10, 'pns@srcr.pt', 924444444, 'Rua dos Moveis Cerrados, 29', 'Engenheiro de Polimeros', [], 5).
 
-centro_saude(1, 'Centro de Saúde Mem Martins', 'Rua Pedro Bispo, 725', 951111111, 'csmm@srcr.pt').
-centro_saude(2, 'Centro de Saúde Chelas', 'Rua Samuel Mira, 666', 952222222, 'csc@srcr.pt').
-centro_saude(3, 'Centro de Saúde São Vítor', 'Rua dos Cabeçudos, 80', 953333333, 'cssv@srcr.pt').
-centro_saude(4, 'Centro de Saúde Amares', 'Rua da Lagars, 137', 954444444, 'csa@srcr.pt').
-centro_saude(5, 'Centro de Saúde Viena do Forte', 'Rua Anthony Feijó, 154', 955555555, 'csvf@srcr.pt').
+centro_saude(1, 'Centro de Saude Mem Martins', 'Rua Pedro Bispo, 725', 951111111, 'csmm@srcr.pt').
+centro_saude(2, 'Centro de Saude Chelas', 'Rua Samuel Mira, 666', 952222222, 'csc@srcr.pt').
+centro_saude(3, 'Centro de Saude São Vítor', 'Rua dos Cabecudos, 80', 953333333, 'cssv@srcr.pt').
+centro_saude(4, 'Centro de Saude Amares', 'Rua da Lagars, 137', 954444444, 'csa@srcr.pt').
+centro_saude(5, 'Centro de Saude Viena do Forte', 'Rua Anthony Feijo, 154', 955555555, 'csvf@srcr.pt').
 
-staff(1, 5, 'Álvaro de Campos', 'adc@srcr.pt').
+staff(1, 5, 'Alvaro de Campos', 'adc@srcr.pt').
 staff(2, 4, 'Joaquim Arnaldo Fernandes', 'jaf@srcr.pt').
-staff(3, 2, 'Tibúrcio Mantorras', 'tm@srcr.pt').
+staff(3, 2, 'Tiburcio Mantorras', 'tm@srcr.pt').
 staff(4, 1, 'Jaime Oliveira', 'jo@srcr.pt').
-staff(5, 3, 'Benjamin Otávio Teixeira', 'bot@srcr.pt').
-staff(6, 5, 'Sérgio Batedor Oliveira', 'sbo@srcr.pt').
+staff(5, 3, 'Benjamin Otavio Teixeira', 'bot@srcr.pt').
+staff(6, 5, 'Sergio Batedor Oliveira', 'sbo@srcr.pt').
 
 vacinacao_Covid(1, 1, 2021-01-5, 'Pfizer', 1).
 vacinacao_Covid(1, 17, 2021-01-5, 'Pfizer', 1).
@@ -84,6 +84,9 @@ vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
 -utente(Id,Nss,N,D,E,T,M,P,DC,CS) :- nao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)), 
 									 nao(excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS))).
 
+-centro_saude(Id,N,M,T,E) :- nao(centro_saude(Id,N,M,T,E)),
+							 nao(excecao(centro_saude(Id,N,M,T,E))).	
+
 % ----------------------------------------------------------------------------------------------
 % ------------------------------- Conhecimento Impreciso ---------------------------------------
 % ----------------------------------------------------------------------------------------------
@@ -93,10 +96,20 @@ utente(20, {19283018273, 00033345901}, 'Francisco Correia Antonieto Franco', 195
 excecao(utente(20, 19283018273, 'Francisco Correia Antonieto Franco', 1950-03-05, 'fcaf@srcr.pt', 930000000, 'Rua das Amoreiras, 152', 'Reformado', ['Osteoporose', 'Parkinson'], 2)).
 excecao(utente(20, 00033345901, 'Francisco Correia Antonieto Franco', 1950-03-05, 'fcaf@srcr.pt', 930000000, 'Rua das Amoreiras, 152', 'Reformado', ['Osteoporose', 'Parkinson'], 2)).
 
-%Utente com dois números de telemóvel.
-utente(21, 34554334567, 'Antonio Manuel Cascão Xisto', 1968-03-01, 'amcx@srcr.pt', {931111111, 932222222}, 'Largo dos Peões, 25', 'Pedreiro', ['Asma', 'Hipertensão'], 4).
-excecao(utente(21, 34554334567, 'Antonio Manuel Cascão Xisto', 1968-03-01, 'amcx@srcr.pt', 931111111, 'Largo dos Peões, 25', 'Pedreiro', ['Asma', 'Hipertensão'], 4)).
-excecao(utente(21, 34554334567, 'Antonio Manuel Cascão Xisto', 1968-03-01, 'amcx@srcr.pt', 932222222, 'Largo dos Peões, 25', 'Pedreiro', ['Asma', 'Hipertensão'], 4)).
+% Utente com dois números de telemóvel.
+utente(21, 34554334567, 'Antonio Manuel Cascao Xisto', 1968-03-01, 'amcx@srcr.pt', {931111111, 932222222}, 'Largo dos Peoes, 25', 'Pedreiro', ['Asma', 'Hipertensao'], 4).
+excecao(utente(21, 34554334567, 'Antonio Manuel Cascao Xisto', 1968-03-01, 'amcx@srcr.pt', 931111111, 'Largo dos Peoes, 25', 'Pedreiro', ['Asma', 'Hipertensao'], 4)).
+excecao(utente(21, 34554334567, 'Antonio Manuel Cascao Xisto', 1968-03-01, 'amcx@srcr.pt', 932222222, 'Largo dos Peoes, 25', 'Pedreiro', ['Asma', 'Hipertensao'], 4)).
+
+% Centro de Saúde com dois emails.
+centro_saude(6, 'Centro de Saude Viana do Castelo', 'Rua Senhora da Agonia, 8', 956666666, {'csvc@srcr.pt', 'cvsc@srcr.pt'}).
+excecao(centro_saude(6, 'Centro de Saude Viana do Castelo', 'Rua Senhora da Agonia, 8', 956666666, 'csvc@srcr.pt')).
+excecao(centro_saude(6, 'Centro de Saude Viana do Castelo', 'Rua Senhora da Agonia, 8', 956666666, 'cvsc@srcr.pt')).
+
+% Centro de Saúde com dois números de telemóvel
+centro_saude(7, 'Centro de Saude Sao Jorge', 'Travessa da Ilha das Flores, 229', {957777777, 958888888}, 'cssj@srcr.pt').
+excecao(centro_saude(7, 'Centro de Saude Sao Jorge', 'Travessa da Ilha das Flores, 229', 957777777, 'cssj@srcr.pt')).
+excecao(centro_saude(7, 'Centro de Saude Sao Jorge', 'Travessa da Ilha das Flores, 229', 958888888, 'cssj@srcr.pt')).
 
 % ----------------------------------------------------------------------------------------------
 % ------------------------------- Conhecimento Incerto -----------------------------------------
@@ -110,13 +123,33 @@ excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)) :- utente(Id,nissDesconhecido,N,D,E,T,
 utente(19, 10022993871, 'Tiago Pinto Quintas Barros', 2001-01-05, 'tpqb@srcr.pt', telemovelDesconhecido, 'Rua de Fragoso, 44', 'Estudante', [], 1).
 excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)) :- utente(Id,Nss,N,D,E,telemovelDesconhecido,M,P,DC,CS).
 
+% Centro de Saúde com um nome desconhecido.
+centro_saude(8, nomeDesconhecido, 'Rua das Agrelas, 8', 959999999, 'aaaa@srcr.pt').
+excecao(centro_saude(Id,N,M,T,E)) :- centro_saude(Id,nomeDesconhecido,M,T,E).
+
+% Centro de Saúde com um email desconhecido.
+centro_saude(9, 'Centro de Saude Olivais Sul', 'Rua dos Piriquitos, 50', 960000000 , emailDesconhecido).
+excecao(centro_saude(Id,N,M,T,E)) :- centro_saude(Id,N,M,T,emailDesconhecido).
+
 % ----------------------------------------------------------------------------------------------
 % ------------------------------- Conhecimento Interdito ---------------------------------------
 % ----------------------------------------------------------------------------------------------
 
-% Utente
+% Utente com uma data de nascimento interdita.
 utente(22, 43567859643, 'Quintino Moreira Teixeira Grafo', dataInterdita, 'qmtg@srcr.pt', 933333333, 'Rua dos Patos Cegos, 1', 'Pescador', [], 5).
 nulo(dataInterdita).
+
+% Utente com um número de Segurança Social interdito.
+utente(23, segurancaSocialInterdita, 'William Carvalho Santos Silva', 1980-04-03, 'wcss@srcr.pt', 934444444, 'Rua do Alecrim, 2', 'Porteiro', ['Asma'], 3).
+nulo(segurancaSocialInterdita).
+
+% Centro de Saúde com nome interdito.
+centro_saude(10, nomeInterdito, 'Travessa das Picaretas, 10', 961111111, 'bbbb@srcr.pt').
+nulo(nomeInterdito).
+
+% Centro de Saúde com número de telemóvel interdito.
+centro_saude(11, 'Centro de Saude Odivelas', 'Rua Sargento Coronel Frances, 4', numeroInterdito, 'csodv@srcr.pt').
+nulo(numeroInterdito).
 
 % ------------------------------------------------------------------------------------------------------------------------------------------
 % ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho que foram retirados de fichas das aulas --------------
@@ -345,6 +378,18 @@ eliminaTuplos([H|T], D, [H|R]) :-
 									 comprimento(R,N),
 									 N == 0).
 
++utente(Id,Nss,N,D,E,T,M,P,DC,CS) :: (procura(Nss,(utente(Id,Nss,N,D,E,T,M,P,DC,CS),nao(nulo(Nss))),R),
+									 comprimento(R,N),
+									 N == 0).									
+
++centro_saude(Id,N,M,T,E) :: (procura(N,(centro_saude(Id,N,M,T,E),nao(nulo(N))),R),
+							 comprimento(R,N),
+							 N == 0).
+
++centro_saude(Id,N,M,T,E) :: (procura(T,(centro_saude(Id,N,M,T,E),nao(nulo(T))),R),
+							 comprimento(R,N),
+							 N == 0).							
+
 % ----------------------------------------------------------------------------------------------
 % ---------------------------------------Funcionalidades----------------------------------------
 % ----------------------------------------------------------------------------------------------
@@ -517,7 +562,7 @@ idade1_fase_vacinacao(V) :-
 % ----------------------------------------------------------------------------------------------
 
 profissao1_fase_vacinacao(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,P,_,_),(P == 'Médico';P == 'Enfermeiro';P == 'Militar')),V).
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,P,_,_),(P == 'Medico';P == 'Enfermeiro';P == 'Militar')),V).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na primeira fase devido às suas doenças crónicas.
@@ -525,7 +570,7 @@ profissao1_fase_vacinacao(V) :-
 % ----------------------------------------------------------------------------------------------
 
 doencas1_fase_vacinacao(V) :-
-	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,L,_),(pertence('Doença Pulmonar Obstrutiva',L);pertence('Doenças Cardiovasculares',L))),V).
+	procura((Id,Nome),(utente(Id,_,Nome,_,_,_,_,_,L,_),(pertence('Doenca Pulmonar Obstrutiva',L);pertence('Doencas Cardiovasculares',L))),V).
 
 % ----------------------------------------------------------------------------------------------
 % Predicado que identifica as pessoas elegíveis para vacinação na segunda fase.
