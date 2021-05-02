@@ -5,6 +5,7 @@
 :- dynamic staff/4.
 :- dynamic vacinacao_Covid/5.
 :- dynamic '-'/1.
+:- dynamic excecao/1.
 
 % ----------------------------------------------------------------------------------------------
 % O Conhecimento pode ser aumentado mas nunca diminuído.
@@ -99,9 +100,9 @@ vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
 % ----------------------------------------------------------------------------------------------
 
 % Utente com dois números de Segurança Social.
-utente(20, {19283018273, 00033345901}, 'Francisco Correia Antonieto Franco', 1950-03-05, 'fcaf@srcr.pt', 930000000, 'Rua das Amoreiras, 152', 'Reformado', ['Osteoporose', 'Parkinson'], 2).
+utente(20, {19283018273, 10033345901}, 'Francisco Correia Antonieto Franco', 1950-03-05, 'fcaf@srcr.pt', 930000000, 'Rua das Amoreiras, 152', 'Reformado', ['Osteoporose', 'Parkinson'], 2).
 excecao(utente(20, 19283018273, 'Francisco Correia Antonieto Franco', 1950-03-05, 'fcaf@srcr.pt', 930000000, 'Rua das Amoreiras, 152', 'Reformado', ['Osteoporose', 'Parkinson'], 2)).
-excecao(utente(20, 00033345901, 'Francisco Correia Antonieto Franco', 1950-03-05, 'fcaf@srcr.pt', 930000000, 'Rua das Amoreiras, 152', 'Reformado', ['Osteoporose', 'Parkinson'], 2)).
+excecao(utente(20, 10033345901, 'Francisco Correia Antonieto Franco', 1950-03-05, 'fcaf@srcr.pt', 930000000, 'Rua das Amoreiras, 152', 'Reformado', ['Osteoporose', 'Parkinson'], 2)).
 
 % Utente com dois números de telemóvel.
 utente(21, 34554334567, 'Antonio Manuel Cascao Xisto', 1968-03-01, 'amcx@srcr.pt', {931111111, 932222222}, 'Largo dos Peoes, 25', 'Pedreiro', ['Asma', 'Hipertensao'], 4).
@@ -316,6 +317,49 @@ atualizarStaffImp(Id,Idcs,N,E) :- excecao(staff(Id,Idcs,N,E)),
 								  retrocesso(staff(Id,Idcs,N,emailStaffDesconhecido)),
 								  evolucao(staff(Id,Idcs,N,E)).
 
+% ----------------------------------------------------------------------------------------------
+% ------------------------------- Atualizar Conhecimento Impreciso -----------------------------
+% ----------------------------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------------------------
+% ----------------------------------------- Utente ---------------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% Atualizar o Conhecimento Impreciso de um Utente Imperfeito.
+atualizarUtenteImp(Id,Nss,N,D,E,T,M,P,DC,CS) :- si(utente(Id,Nss,N,D,E,T,M,P,DC,CS),desconhecido),
+									   retrocesso(utente(Id,_,_,_,_,_,_,_,_,_)),
+									   procura(excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),R),
+									   comprimento(R,N1),
+									   N1 > 0,
+									   removerExcecoes(R),
+									   evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
+
+% ----------------------------------------------------------------------------------------------
+% -------------------------------------- Centro de Saúde ---------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% Atualizar o Conhecimento Impreciso de um Centro de Saúde Imperfeito.
+atualizarCentroSaudeImp(Id,N,M,T,E) :- si(centro_saude(Id,N,M,T,E),desconhecido),
+									   retrocesso(centro_saude(Id,_,_,_,_)),
+									   procura(excecao(centro_saude(Id,N,M,T,E)),(excecao(centro_saude(Id,N,M,T,E))),R),
+									   comprimento(R,N1),
+									   N1 > 0,
+									   removerExcecoes(R),
+									   evolucao(centro_saude(Id,N,M,T,E)).
+
+% ----------------------------------------------------------------------------------------------
+% ----------------------------------------- Staff ----------------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% Atualizar o Conhecimento Impreciso de um Staff Imperfeito.
+atualizarStaffImp(Id,Idcs,N,E) :- si(staff(Id,Idcs,N,E),desconhecido),
+								  retrocesso(staff(Id,_,_,_)),
+								  procura(excecao(staff(Id,Idcs,N,E)),(excecao(staff(Id,Idcs,N,E))),R),
+								  comprimento(R,N1),
+								  N1 > 0,
+								  removerExcecoes(R),
+								  evolucao(staff(Id,Idcs,N,E)).
+
 % ------------------------------------------------------------------------------------------------------------------------------------------
 % ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho que foram retirados de fichas das aulas --------------
 % ------------------------------------------------------------------------------------------------------------------------------------------
@@ -459,6 +503,14 @@ eliminaTuplos([E|T], D, R) :-
     eliminaTuplos(T, D, R).
 eliminaTuplos([H|T], D, [H|R]) :-
     eliminaTuplos(T, D, R).
+
+% ----------------------------------------------------------------------------------------------
+% Predicado que permite a remoção de exceções de uma lista.
+% Extensão do predicado removerExcecoes: Lista -> {V,F}.
+% ----------------------------------------------------------------------------------------------
+
+removerExcecoes([]).
+removerExcecoes([H|T]) :- retrocesso(H), removerExcecoes(T).
 
 % ----------------------------------------------------------------------------------------------
 % -----------------------------------Invariantes para a remoção---------------------------------
