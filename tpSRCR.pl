@@ -1,9 +1,10 @@
 % Trabalho Prático SRCR 20/21.
 
-:- dynamic (utente/10).
-:- dynamic (centro_saude/5).
-:- dynamic (staff/4).
-:- dynamic (vacinacao_Covid/5).
+:- dynamic utente/10.
+:- dynamic centro_saude/5.
+:- dynamic staff/4.
+:- dynamic vacinacao_Covid/5.
+:- dynamic '-'/1.
 
 % ----------------------------------------------------------------------------------------------
 % O Conhecimento pode ser aumentado mas nunca diminuído.
@@ -181,43 +182,139 @@ excecao(vacinacao_Covid(Ids,Idu,D,V,T)) :- vacinacao_Covid(Ids,Idu,D,vacinaDesco
 
 % Utente com uma data de nascimento interdita.
 utente(22, 43567859643, 'Quintino Moreira Teixeira Grafo', dataInterdita, 'qmtg@srcr.pt', 933333333, 'Rua dos Patos Cegos, 1', 'Pescador', [], 5).
-nulo(dataInterdita).
 excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)) :- utente(Id,Nss,N,dataInterdita,E,T,M,P,DC,CS).
+nulo(dataInterdita).
 
 % Utente com um número de Segurança Social interdito.
 utente(23, segurancaSocialInterdita, 'William Carvalho Santos Silva', 1980-04-03, 'wcss@srcr.pt', 934444444, 'Rua do Alecrim, 2', 'Porteiro', ['Asma'], 3).
-nulo(segurancaSocialInterdita).
 excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)) :- utente(Id,segurancaSocialInterdita,N,D,E,T,M,P,DC,CS).
+nulo(segurancaSocialInterdita).
 
 % Centro de Saúde com nome interdito.
 centro_saude(10, nomeInterdito, 'Travessa das Picaretas, 10', 961111111, 'bbbb@srcr.pt').
-nulo(nomeInterdito).
 excecao(centro_saude(Id,N,M,T,E)) :- centro_saude(Id,nomeInterdito,M,T,E).
+nulo(nomeInterdito).
 
 % Centro de Saúde com número de telemóvel interdito.
 centro_saude(11, 'Centro de Saude Odivelas', 'Rua Sargento Coronel Frances, 4', numeroInterdito, 'csodv@srcr.pt').
-nulo(numeroInterdito).
 excecao(centro_saude(Id,N,M,T,E)) :- centro_saude(Id,N,M,numeroInterdito,E).
+nulo(numeroInterdito).
 
 % Staff com id Centro de Saúde interdito.
 staff(11, centroInterdito, 'Pedro Pereira Pauleta Aveiro', 'pppa@srcr.pt').
-nulo(centroInterdito).
 excecao(staff(Id,Idcs,N,E)) :- staff(Id,centroInterdito,N,E).
+nulo(centroInterdito).
 
 % Staff com nome interdito.
-staff(12, 'Centro Saude Sao Pedro Do Sul', nomeStaffInterdito, 'ddddd@srcr.pt').
-nulo(nomeStaffInterdito).
+staff(12, 2, nomeStaffInterdito, 'ddddd@srcr.pt').
 excecao(staff(Id,Idcs,N,E)) :- staff(Id,Idcs,nomeStaffInterdito,E).
+nulo(nomeStaffInterdito).
 
 % Vacinação Covid com id Utente interdito.
 vacinacao_Covid(5, utenteInterdito, 2021-03-20, 'Astrazeneca', 1).
-nulo(utenteInterdito).
 excecao(vacinacao_Covid(Ids,Idu,D,V,T)) :- vacinacao_Covid(Ids,utenteInterdito,D,V,T).
+nulo(utenteInterdito).
 
 % Vacinação Covid com nome vacina interdito.
 vacinacao_Covid(3, 19, 2021-02-20, vacinaInterdita, 1).
-nulo(vacinaInterdita).
 excecao(vacinacao_Covid(Ids,Idu,D,V,T)) :- vacinacao_Covid(Ids,Idu,D,vacinaInterdita,T).
+nulo(vacinaInterdita).
+
+% ----------------------------------------------------------------------------------------------
+% ------------------------------- Atualizar Conhecimento Incerto -------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% ----------------------------------------------------------------------------------------------
+% ----------------------------------------- Utente ---------------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% Atualizar um Utente com Número de Segurança Social Desconhecido.
+atualizarUtenteImp(Id,Nss,N,D,E,T,M,P,DC,CS) :- excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),
+												retrocesso(utente(Id,nissDesconhecido,N,D,E,T,M,P,DC,CS)),
+												evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
+
+% Atualizar um Utente com Nome Desconhecido.
+atualizarUtenteImp(Id,Nss,N,D,E,T,M,P,DC,CS) :- excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),
+												retrocesso(utente(Id,Nss,nomeUtenteDesconhecido,D,E,T,M,P,DC,CS)),
+												evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
+
+% Atualizar um Utente com Data de Nascimento Desconhecido.
+atualizarUtenteImp(Id,Nss,N,D,E,T,M,P,DC,CS) :- excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),
+												retrocesso(utente(Id,Nss,N,dataUtenteDesconhecido,E,T,M,P,DC,CS)),
+												evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
+
+% Atualizar um Utente com Email Desconhecido.
+atualizarUtenteImp(Id,Nss,N,D,E,T,M,P,DC,CS) :- excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),
+												retrocesso(utente(Id,Nss,N,D,emailUtenteDesconhecido,T,M,P,DC,CS)),
+												evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
+
+% Atualizar um Utente com Número de Telemóvel Desconhecido.
+atualizarUtenteImp(Id,Nss,N,D,E,T,M,P,DC,CS) :- excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),
+												retrocesso(utente(Id,Nss,N,D,E,telemovelDesconhecido,M,P,DC,CS)),
+												evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
+
+% Atualizar um Utente com Morada Desconhecido.
+atualizarUtenteImp(Id,Nss,N,D,E,T,M,P,DC,CS) :- excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),
+												retrocesso(utente(Id,Nss,N,D,E,T,moradaUtenteDesconhecido,P,DC,CS)),
+												evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
+
+% Atualizar um Utente com Profissão Desconhecido.
+atualizarUtenteImp(Id,Nss,N,D,E,T,M,P,DC,CS) :- excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),
+												retrocesso(utente(Id,Nss,N,D,E,T,M,profissaoUtenteDesconhecido,DC,CS)),
+												evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
+
+% Atualizar um Utente com Doenças Desconhecido.
+atualizarUtenteImp(Id,Nss,N,D,E,T,M,P,DC,CS) :- excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),
+												retrocesso(utente(Id,Nss,N,D,E,T,M,P,doencasUtenteDesconhecido,CS)),
+												evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
+
+% Atualizar um Utente com Centro de Saúde Desconhecido.
+atualizarUtenteImp(Id,Nss,N,D,E,T,M,P,DC,CS) :- excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)),
+												retrocesso(utente(Id,Nss,N,D,E,T,M,P,DC,centroSaudeUtenteDesconhecido)),
+												evolucao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)).
+
+% ----------------------------------------------------------------------------------------------
+% -------------------------------------- Centro de Saúde ---------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% Atualizar um Centro de Saúde com Nome Desconhecido.
+atualizarCentroSaudeImp(Id,N,M,T,E) :- excecao(centro_saude(Id,N,M,T,E)),
+									   retrocesso(centro_saude(Id,nomeDesconhecido,M,T,E)),
+									   evolucao(centro_saude(Id,N,M,T,E)).
+
+% Atualizar um Centro de Saúde com Morada Desconhecido.
+atualizarCentroSaudeImp(Id,N,M,T,E) :- excecao(centro_saude(Id,N,M,T,E)),
+									   retrocesso(centro_saude(Id,N,moradaCentroSaudeDesconhecido,T,E)),
+									   evolucao(centro_saude(Id,N,M,T,E)).
+
+% Atualizar um Centro de Saúde com Número de Telemóvel Desconhecido.
+atualizarCentroSaudeImp(Id,N,M,T,E) :- excecao(centro_saude(Id,N,M,T,E)),
+									   retrocesso(centro_saude(Id,N,M,telemovelCentroSaudeDesconhecido,E)),
+									   evolucao(centro_saude(Id,N,M,T,E)).
+
+% Atualizar um Centro de Saúde com Email Desconhecido.
+atualizarCentroSaudeImp(Id,N,M,T,E) :- excecao(centro_saude(Id,N,M,T,E)),
+									   retrocesso(centro_saude(Id,N,M,T,emailDesconhecido)),
+									   evolucao(centro_saude(Id,N,M,T,E)).
+
+% ----------------------------------------------------------------------------------------------
+% ----------------------------------------- Staff ----------------------------------------------
+% ----------------------------------------------------------------------------------------------
+
+% Atualizar um Staff com Id Centro de Saúde Desconhecido.
+atualizarStaffImp(Id,Idcs,N,E) :- excecao(staff(Id,Idcs,N,E)),
+								  retrocesso(staff(Id,centroDesconhecido,N,E)),
+								  evolucao(staff(Id,Idcs,N,E)).
+
+% Atualizar um Staff com Nome Desconhecido.
+atualizarStaffImp(Id,Idcs,N,E) :- excecao(staff(Id,Idcs,N,E)),
+								  retrocesso(staff(Id,Idcs,nomeStaffDesconhecido,E)),
+								  evolucao(staff(Id,Idcs,N,E)).
+
+% Atualizar um Staff com Email Desconhecido.
+atualizarStaffImp(Id,Idcs,N,E) :- excecao(staff(Id,Idcs,N,E)),
+								  retrocesso(staff(Id,Idcs,N,emailStaffDesconhecido)),
+								  evolucao(staff(Id,Idcs,N,E)).
 
 % ------------------------------------------------------------------------------------------------------------------------------------------
 % ---------Alguns predicados que poderão ser úteis ao longo da realização do trabalho que foram retirados de fichas das aulas --------------
@@ -442,37 +539,39 @@ eliminaTuplos([H|T], D, [H|R]) :-
 % -------------------------Invariantes para o Conhecimento Interdito----------------------------
 % ----------------------------------------------------------------------------------------------
 
-+utente(Id,Nss,N,D,E,T,M,P,DC,CS) :: (procura(D,(utente(22, 43567859643, 'Quintino Moreira Teixeira Grafo', D, 'qmtg@srcr.pt', 933333333, 'Rua dos Patos Cegos, 1', 											 'Pescador', [], 5),nao(nulo(D))),R),
-									 comprimento(R,N),
-									 N == 0).
++utente(Id,Nss,N,D,E,T,M,P,DC,CS) :: (procura(D,(utente(22, 43567859643, 'Quintino Moreira Teixeira Grafo', D, 'qmtg@srcr.pt', 933333333, 'Rua dos Patos Cegos, 1', 'Pescador', [], 5),
+									 nao(nulo(D))),R),
+									 comprimento(R,N1),
+									 N1 == 0).
 
-+utente(Id,Nss,N,D,E,T,M,P,DC,CS) :: (procura(Nss,(utente(23, Nss, 'William Carvalho Santos Silva', 1980-04-03, 'wcss@srcr.pt', 934444444, 'Rua do 										 Alecrim, 2', 'Porteiro', ['Asma'], 3),nao(nulo(Nss))),R),
-									 comprimento(R,N),
-									 N == 0).									
++utente(Id,Nss,N,D,E,T,M,P,DC,CS) :: (procura(Nss,(utente(23, Nss, 'William Carvalho Santos Silva', 1980-04-03, 'wcss@srcr.pt', 934444444, 'Rua do Alecrim, 2', 'Porteiro', ['Asma'], 3),
+									 nao(nulo(Nss))),R),
+									 comprimento(R,N1),
+									 N1 == 0).									
 
 +centro_saude(Id,N,M,T,E) :: (procura(N,(centro_saude(10, N, 'Travessa das Picaretas, 10', 961111111, 'bbbb@srcr.pt'),nao(nulo(N))),R),
-							 comprimento(R,N),
-							 N == 0).
+							 comprimento(R,N1),
+							 N1 == 0).
 
 +centro_saude(Id,N,M,T,E) :: (procura(T,(centro_saude(11, 'Centro de Saude Odivelas', 'Rua Sargento Coronel Frances, 4', T, 'csodv@srcr.pt'),nao(nulo(T))),R),
-							 comprimento(R,N),
-							 N == 0).
+							 comprimento(R,N1),
+							 N1 == 0).
 
-+staff(Id,Idcs,N,E) :: (procura(Idcs,(staff(11, centroInterdito, 'Pedro Pereira Pauleta Aveiro', 'pppa@srcr.pt'),nao(nulo(Idcs))),R),
-					   comprimento(R,N),
-					   N == 0).
++staff(Id,Idcs,N,E) :: (procura(Idcs,(staff(11, Idcs, 'Pedro Pereira Pauleta Aveiro', 'pppa@srcr.pt'),nao(nulo(Idcs))),R),
+					   comprimento(R,N1),
+					   N1 == 0).
 
-+staff(Id,Idcs,N,E)	:: (procura(N,(staff(12, 'Centro Saude Sao Pedro Do Sul', nomeStaffInterdito, 'ddddd@srcr.pt'),nao(nulo(N))),R),
-					   comprimento(R,N),
-					   N == 0).		  
++staff(Id,Idcs,N,E)	:: (procura(N,(staff(12, 'Centro Saude Sao Pedro Do Sul', N, 'ddddd@srcr.pt'),nao(nulo(N))),R),
+					   comprimento(R,N1),
+					   N1 == 0).		  
 					    												
-+vacinacao_Covid(Ids,Idu,D,V,T) :: (procura(Idu,(vacinacao_Covid(5, utenteInterdito, 2021-03-20, 'Astrazeneca', 1),nao(nulo(Idu))),R),
-									comprimento(R,N),
-									N == 0).     
++vacinacao_Covid(Ids,Idu,D,V,T) :: (procura(Idu,(vacinacao_Covid(5, Idu, 2021-03-20, 'Astrazeneca', 1),nao(nulo(Idu))),R),
+									comprimento(R,N1),
+									N1 == 0).     
 
-+vacinacao_Covid(Ids,Idu,D,V,T) :: (procura(V,(vacinacao_Covid(3, 19, 2021-02-20, vacinaInterdita, 1),nao(nulo(V))),R),
-									comprimento(R,N),
-									N == 0).								        
++vacinacao_Covid(Ids,Idu,D,V,T) :: (procura(V,(vacinacao_Covid(3, 19, 2021-02-20, V, 1),nao(nulo(V))),R),
+									comprimento(R,N1),
+									N1 == 0).								        
 
 % ----------------------------------------------------------------------------------------------
 % ---------------------------------------Funcionalidades----------------------------------------
