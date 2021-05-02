@@ -83,6 +83,10 @@ vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
 % ------------------------------- Conhecimento Imperfeito --------------------------------------
 % ----------------------------------------------------------------------------------------------
 
+% ----------------------------------------------------------------------------------------------
+% ------------------------------- Conhecimento Negativo ----------------------------------------
+% ----------------------------------------------------------------------------------------------
+
 -utente(Id,Nss,N,D,E,T,M,P,DC,CS) :- nao(utente(Id,Nss,N,D,E,T,M,P,DC,CS)), 
 									 nao(excecao(utente(Id,Nss,N,D,E,T,M,P,DC,CS))).
 
@@ -93,7 +97,15 @@ vacinacao_Covid(1, 13, 2021-07-31, 'Astrazeneca', 1).
 					   nao(excecao(staff(Id,Idcs,N,E))).	
 
 -vacinacao_Covid(Ids,Idu,D,V,T) :- nao(vacinacao_Covid(Ids,Idu,D,V,T)),		
-								   nao(excecao(vacinacao_Covid(Ids,Idu,D,V,T))).	   							
+								   nao(excecao(vacinacao_Covid(Ids,Idu,D,V,T))).	 
+
+-utente(24, 29292928276, 'Sergio Conceicao Fonseca da Cunha', 1980-08-07, 'scfdc@srcr.pt', 912345822, 'Rua Estadio do Dragao', 'Treinador', [], 1).
+
+-centro_saude(12, 'Centro de Saude Clinica do Dragao', 'Rua Estadio do Dragao', 987543213, 'cscd@srcr.pt').
+
+-staff(13, 6, 'Jorge Jesus Felipe Vieira Costa', 'jjfvc@srcr.pt').
+
+-vacinacao_Covid(11, 11, 2021-02-17, 'Pfizer', 1).  							
 
 % ----------------------------------------------------------------------------------------------
 % ------------------------------- Conhecimento Impreciso ---------------------------------------
